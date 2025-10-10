@@ -1,0 +1,250 @@
+// This is your Prisma schema file for SheetMask E-Commerce
+// MongoDB Database Configuration
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// USER & AUTHENTICATION
+// ============================================================================
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  name          String
+  password      String?   // Null for OAuth users
+  phone         String?
+  avatar        String?
+  role          Role      @default(CUSTOMER)
+  emailVerified Boolean   @default(false)
+  
+  // Relations
+  addresses     Address[]
+  orders        Order[]
+  reviews       ProductReview[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@map("users")
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+model Address {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  fullName      String
+  phone         String
+  addressLine1  String
+  addressLine2  String?
+  city          String
+  state         String
+  postalCode    String
+  country       String   @default("USA")
+  isDefault     Boolean  @default(false)
+  
+  // Relations
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("addresses")
+}
+
+// ============================================================================
+// PRODUCTS
+// ============================================================================
+
+model Product {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  slug              String          @unique
+  description       String
+  shortDescription  String?
+  price             Float
+  discountedPrice   Float?
+  sku               String          @unique
+  stock             Int
+  images            String[]
+  category          ProductCategory
+  skinTypes         SkinType[]
+  ingredients       String[]
+  benefits          String[]
+  howToUse          String
+  featured          Boolean         @default(false)
+  rating            Float           @default(0)
+  reviewCount       Int             @default(0)
+  
+  // Relations
+  reviews           ProductReview[]
+  orderItems        OrderItem[]
+  
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  
+  @@map("products")
+}
+
+enum ProductCategory {
+  HYDRATING
+  BRIGHTENING
+  ANTI_AGING
+  PURIFYING
+  SOOTHING
+}
+
+enum SkinType {
+  DRY
+  OILY
+  COMBINATION
+  SENSITIVE
+  NORMAL
+}
+
+model ProductReview {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId   String   @db.ObjectId
+  userId      String   @db.ObjectId
+  rating      Int      // 1-5
+  title       String
+  comment     String
+  verified    Boolean  @default(false) // Purchased product
+  helpful     Int      @default(0)
+  
+  // Relations
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("product_reviews")
+}
+
+// ============================================================================
+// ORDERS
+// ============================================================================
+
+model Order {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String        @db.ObjectId
+  orderNumber     String        @unique
+  
+  // Amounts
+  subtotal        Float
+  tax             Float
+  shipping        Float
+  discount        Float         @default(0)
+  total           Float
+  
+  // Status
+  status          OrderStatus   @default(PENDING)
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentMethod   String
+  
+  // Addresses (stored as JSON for historical record)
+  shippingAddress Json
+  billingAddress  Json
+  
+  // Shipping
+  trackingNumber  String?
+  notes           String?
+  
+  // Relations
+  user            User          @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model OrderItem {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId     String   @db.ObjectId
+  productId   String   @db.ObjectId
+  
+  // Product info (snapshot at time of order)
+  productName String
+  productImage String
+  price       Float
+  quantity    Int
+  total       Float
+  
+  // Relations
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("order_items")
+}
+
+// ============================================================================
+// COUPONS & PROMOTIONS
+// ============================================================================
+
+model Coupon {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  code          String    @unique
+  type          CouponType
+  value         Float     // Percentage or fixed amount
+  minOrderValue Float?
+  maxDiscount   Float?
+  expiresAt     DateTime?
+  usageLimit    Int?
+  usageCount    Int       @default(0)
+  active        Boolean   @default(true)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@map("coupons")
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED
+}
+
+// ============================================================================
+// ANALYTICS & TRACKING
+// ============================================================================
+
+model Newsletter {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @unique
+  subscribed  Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("newsletter")
+}
