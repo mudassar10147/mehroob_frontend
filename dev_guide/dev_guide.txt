@@ -48,3 +48,5 @@ Once approved, it can be integrated into a live page.
 Why: Ensures visual consistency and makes global theme changes instant.
 Never hardcode colors, font sizes, or spacing directly inside components.
 Always use values from globals.css.
+
+6. Make Sure to look for components First, If the required component is Available use it, and if not only then start the component development process

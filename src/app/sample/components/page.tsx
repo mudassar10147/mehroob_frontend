@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Header } from '@/components/layout/Header';
 
 export const metadata: Metadata = {
   title: 'Component Showcase | SheetMask',
@@ -42,6 +43,48 @@ export default function ComponentShowcasePage() {
 
         {/* Component Sections */}
         <div className="space-y-16">
+          {/* Header Section */}
+          <ComponentSection
+            id="header"
+            title="Header Component"
+            description="Main navigation header with branding, menu, search, cart, and account"
+          >
+            <div className="space-y-8">
+              <div className="rounded-lg border-2 border-dashed border-[var(--color-border)] overflow-hidden">
+                <Header />
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Responsive design (Desktop + Mobile)</li>
+                  <li>✅ Brand name from environment variables</li>
+                  <li>✅ Shop dropdown with categories</li>
+                  <li>✅ Cart with item count badge</li>
+                  <li>✅ Account dropdown (different for logged in/out)</li>
+                  <li>✅ Mobile hamburger menu</li>
+                  <li>✅ Search functionality ready</li>
+                  <li>✅ Uses global CSS variables</li>
+                </ul>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Usage:</h4>
+                <pre className="bg-gray-100 p-4 rounded">
+{`import { Header } from '@/components/layout/Header';
+
+// In your layout
+<Header />`}
+                </pre>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Environment Variables:</h4>
+                <pre className="bg-gray-100 p-4 rounded text-sm">
+{`NEXT_PUBLIC_SITE_NAME="MaskBar"
+NEXT_PUBLIC_SITE_TAGLINE="by Mehroob"
+NEXT_PUBLIC_SITE_FULL_NAME="MaskBar by Mehroob"`}
+                </pre>
+              </div>
+            </div>
+          </ComponentSection>
+
           {/* Buttons Section */}
           <ComponentSection
             id="buttons"
@@ -294,6 +337,7 @@ function ColorSwatch({
 
 // Categories data
 const categories = [
+  { id: 'header', name: 'Header' },
   { id: 'buttons', name: 'Buttons' },
   { id: 'links', name: 'Links' },
   { id: 'cards', name: 'Cards' },

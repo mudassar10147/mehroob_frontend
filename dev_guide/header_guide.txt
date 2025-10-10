@@ -1,0 +1,51 @@
+The header is the first impression of my brand, so it should feel clean, modern, premium, and convert-oriented (guides users to shop).
+Below is a full breakdown of what should be in your header, depending on your goals — and then I’ll show recommended structure (for both desktop and mobile).
+
+🧭 1. Branding Section (Left side)
+Purpose: Instantly establish trust + brand recall.
+Include:
+Logo: “Maskbar by Mehroob”
+→ Should be minimal and clean, possibly with an icon or symbol (e.g. drop, mask outline, flower).
+Clickable to Home page
+✅ Example:
+Maskbar by Mehroob
+
+🛍️ 2. Navigation Menu (Center)
+Purpose: Let users quickly explore.
+Recommended links:
+-> Home
+-> Shop → Dropdown with categories:
+Hydrating Masks
+Brightening Masks
+Anti-Aging
+K-Beauty
+All Sheet Masks
+-> Best Sellers
+-> New Arrivals
+-> Explore
+-> About
+-> Search Bar (Icon)
+✅ Example:
+Home | Shop ▼ | Best Sellers | Explore ▼ | About
+
+
+❤️ 3. Utility Icons (Right side)
+Purpose: Quick actions — these are essential for ecommerce.
+Include:
+🧺 Cart Icon
+👤 Account / Login Icon → Dropdown for Login/ signup if not Autheticated else Order, Profile, etc
+✅ Example:
+[🛒2] [👤]
+
+
+📱 6. Mobile Header Design
+Simplify layout:
+Left: Hamburger Menu
+Center: Logo
+Right: Cart + Account icon
+Expand menu drawer with links and search inside.
+✅ Example:
+☰   MaskBar   🛒
+
+
+Note -> Make sure we take the name of the Webpage like MaskBar from .env file so We after development I decide to chnge name, I just need to change env
