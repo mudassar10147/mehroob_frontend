@@ -1,0 +1,56 @@
+This file defining the brand for which we are developing this webpage
+
+MaskBar.pk — by Mehroob
+MaskBar is a Sub Brand of Mehroob(A skin care Ecommerce Store)
+
+1. What is Mehroob
+Mehroob is a premium Pakistani skincare Retail brand inspired by Urdu and Persian roots — where “Mehr” means kindness/light, and “Roob” means grace or charm.
+The brand philosophy centers around graceful, kind skincare — clean, minimal, honest, and results-driven.
+It aims to bring authentic, dermatologist-approved skincare products to Pakistan with elegant, luxury aesthetics.
+Tone: Calm · Confident · Premium · Minimalist
+
+2. What is MaskBar.pk (Mehroob Project)
+MaskBar is a sub-brand/storefront powered by Mehroob — dedicated exclusively to sheet masks.
+It acts as a discovery platform for customers to explore, try, and purchase all types of sheet masks (hydrating, brightening, firming, soothing, etc.) from trusted brands curated by Mehroob.
+The store is a soft-launch project to build brand awareness, test market demand, and start generating traffic under the Mehroob ecosystem.
+
+3. The Goal
+To position Mehroob as a credible and premium skincare brand.
+To build traffic and community around an easy-entry category (sheet masks).
+To create a minimalist, high-end online experience that reflects authenticity and trust.
+Later, to expand this same audience into Mehroob Skincare (the full product line).
+
+4. What the Website is About
+The website is an eCommerce platform focused on selling sheet masks only.
+It will feature:
+Curated mask collections by skin concern
+Educational content (mask types, benefits, usage)
+Aesthetic imagery that reflects purity, calm, and premium skincare
+A subtle “by Mehroob” signature throughout the design
+Example tagline ideas:
+“Pakistan’s First Sheet Mask Boutique — by Mehroob.”
+“All Masks. One Bar.”
+“Unveil Radiance — Powered by Mehroob.”
+
+5. Design & UI Description
+Design direction: Minimal · Elegant · Calm · Boutique
+Layout inspiration: Similar to Skinsho (as shown in the reference screenshots).
+Clean white backgrounds with subtle beige or blush undertones
+Soft serif + sans-serif font pairing (luxury + modern balance)
+Hero banner with product photography and tagline
+Grid-based product layout (consistent spacing, no clutter)
+Hover effects with subtle animations (scale, shadow, fade)
+Use whitespace generously
+
+6. Color Scheme
+Use a neutral, soft, luxury palette:
+Element	Color	Description
+Primary	#F6F1EE	Off-white / beige background
+Secondary	#C9A9A6	Blush rose (for buttons & accents)
+Text Primary	#2B2B2B	Deep charcoal for headings
+Text Secondary	#7A7A7A	Muted grey for descriptions
+Accent / Highlight	#E0C8B1	Soft sand gold or cream beige
+Background	#FFFFFF	Clean white base for premium look
+Typography suggestion:
+Headings: Playfair Display / Cormorant Garamond (Elegant serif)
+Body: Inter / Lato / Poppins (Modern sans-serif)

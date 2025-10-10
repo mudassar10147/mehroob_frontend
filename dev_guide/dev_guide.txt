@@ -1,0 +1,50 @@
+Purpose
+These guidelines ensure clean, consistent, and reviewable development for MaskBar.pk by Mehroob.
+The goal is to maintain smooth collaboration, modular structure, and fast iteration while keeping the brand identity consistent across all pages and components.
+
+1. Variable & Naming Conventions
+Why: Consistent naming makes code easier to read, scale, and debug.
+Rules:
+Use camelCase for variables, functions, and component names (e.g. heroSection, productCard).
+Use PascalCase for React/Next components (e.g. HeroBanner, FooterMenu).
+Use kebab-case for CSS class names (e.g. .hero-section, .product-grid).
+File names should match component names exactly (e.g. HeroBanner.jsx, HeroBanner.css).
+Use clear and descriptive names — avoid short or generic terms like box, temp, data1.
+✅ Good example:
+import ProductCard from "@/components/products/ProductCard";
+❌ Bad example:
+import Box from "@/components/temp/test";
+
+🚀 2. One Task at a Time
+Why: To keep code clean and easily reviewable.
+Process:
+Focus on one task per iteration.
+Example: first build HTML structure, then CSS styling, then functionality / API routes.
+Never jump between unrelated tasks in one commit or one request.
+Each step should end in a review checkpoint.
+✅ Example workflow:
+Build static structure (HTML + placeholders).
+Style using global CSS variables.
+Add interactivity (JS logic or React props).
+Connect API / backend if required.
+
+🧩 3. Component-Based Development
+Why: Encourages modular, reusable, and testable design.
+Process:
+Each page (e.g. Home, About, Product) is composed of multiple small components (e.g. HeroSection, ProductGrid, NewsletterBanner).
+When a component like HeroSection needs 3 sub-components (e.g. HeroText, HeroImage, HeroButton):
+Develop one sub-component at a time.
+Wait for review and approval before moving to the next.
+Each component must be self-contained (CSS + JS + logic inside its folder).
+
+🧱 4. Component Review System
+Why: To ensure each piece meets quality and design expectations before going live.
+There is a Components Preview Page (/samples/components)
+→ Every newly developed component will be added here for visual review.
+Each component must include its name, description, and usage example on the sample page.
+Once approved, it can be integrated into a live page.
+
+🎨 5. Always Use Global CSS Variables
+Why: Ensures visual consistency and makes global theme changes instant.
+Never hardcode colors, font sizes, or spacing directly inside components.
+Always use values from globals.css.
