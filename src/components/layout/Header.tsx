@@ -51,17 +51,17 @@ export function Header() {
         </Link>
 
         {/* Center: Navigation (Desktop Only) */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-2 md:flex">
           <Link 
             href="/" 
-            className="text-sm font-medium text-[var(--color-text-primary)] transition-colors hover:text-[var(--color-primary)]"
+            className="rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
           >
             Home
           </Link>
           
           {/* Shop Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-sm font-medium text-[var(--color-text-primary)] transition-colors hover:text-[var(--color-primary)]">
+            <DropdownMenuTrigger className="rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
               Shop ▾
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="w-48">
@@ -89,21 +89,21 @@ export function Header() {
 
           <Link 
             href="/products?filter=best-sellers" 
-            className="text-sm font-medium text-[var(--color-text-primary)] transition-colors hover:text-[var(--color-primary)]"
+            className="rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
           >
             Best Sellers
           </Link>
           
           <Link 
             href="/products?filter=new" 
-            className="text-sm font-medium text-[var(--color-text-primary)] transition-colors hover:text-[var(--color-primary)]"
+            className="rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
           >
             New Arrivals
           </Link>
           
           <Link 
             href="/about" 
-            className="text-sm font-medium text-[var(--color-text-primary)] transition-colors hover:text-[var(--color-primary)]"
+            className="rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
           >
             About
           </Link>
@@ -116,7 +116,7 @@ export function Header() {
           <Button 
             variant="ghost" 
             size="icon"
-            className="text-[var(--color-text-primary)] hover:text-[var(--color-primary)]"
+            className="text-[var(--color-text-primary)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
             aria-label="Search"
           >
             <Search className="h-5 w-5" />
@@ -127,7 +127,7 @@ export function Header() {
             <Button 
               variant="ghost" 
               size="icon"
-              className="relative text-[var(--color-text-primary)] hover:text-[var(--color-primary)]"
+              className="relative text-[var(--color-text-primary)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
               aria-label={`Cart with ${cartItemCount} items`}
             >
               <ShoppingCart className="h-5 w-5" />
@@ -145,7 +145,7 @@ export function Header() {
               <Button 
                 variant="ghost" 
                 size="icon"
-                className="text-[var(--color-text-primary)] hover:text-[var(--color-primary)]"
+                className="text-[var(--color-text-primary)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
                 aria-label="Account menu"
               >
                 <User className="h-5 w-5" />
@@ -218,32 +218,32 @@ export function Header() {
 
                 <Link 
                   href="/" 
-                  className="text-base font-medium text-[var(--color-text-primary)]"
+                  className="rounded-md px-3 py-2 text-base font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
                 >
                   Home
                 </Link>
 
                 <div>
-                  <p className="mb-2 text-sm font-semibold text-[var(--color-text-secondary)]">
+                  <p className="mb-2 px-3 text-sm font-semibold text-[var(--color-text-secondary)]">
                     Shop by Category
                   </p>
-                  <div className="ml-4 flex flex-col gap-2">
-                    <Link href="/products?category=hydrating" className="text-sm">
+                  <div className="ml-2 flex flex-col gap-1">
+                    <Link href="/products?category=hydrating" className="rounded-md px-3 py-2 text-sm transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
                       Hydrating Masks
                     </Link>
-                    <Link href="/products?category=brightening" className="text-sm">
+                    <Link href="/products?category=brightening" className="rounded-md px-3 py-2 text-sm transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
                       Brightening Masks
                     </Link>
-                    <Link href="/products?category=anti-aging" className="text-sm">
+                    <Link href="/products?category=anti-aging" className="rounded-md px-3 py-2 text-sm transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
                       Anti-Aging
                     </Link>
-                    <Link href="/products?category=purifying" className="text-sm">
+                    <Link href="/products?category=purifying" className="rounded-md px-3 py-2 text-sm transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
                       Purifying Masks
                     </Link>
-                    <Link href="/products?category=soothing" className="text-sm">
+                    <Link href="/products?category=soothing" className="rounded-md px-3 py-2 text-sm transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
                       Soothing Masks
                     </Link>
-                    <Link href="/products" className="text-sm font-medium">
+                    <Link href="/products" className="rounded-md px-3 py-2 text-sm font-medium transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
                       All Sheet Masks
                     </Link>
                   </div>
@@ -251,21 +251,21 @@ export function Header() {
 
                 <Link 
                   href="/products?filter=best-sellers" 
-                  className="text-base font-medium text-[var(--color-text-primary)]"
+                  className="rounded-md px-3 py-2 text-base font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
                 >
                   Best Sellers
                 </Link>
 
                 <Link 
                   href="/products?filter=new" 
-                  className="text-base font-medium text-[var(--color-text-primary)]"
+                  className="rounded-md px-3 py-2 text-base font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
                 >
                   New Arrivals
                 </Link>
 
                 <Link 
                   href="/about" 
-                  className="text-base font-medium text-[var(--color-text-primary)]"
+                  className="rounded-md px-3 py-2 text-base font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
                 >
                   About
                 </Link>
