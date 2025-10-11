@@ -1,5 +1,21 @@
 import type { Metadata } from 'next';
 import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import HeroSection from '@/components/sections/HeroSection';
+import CategoriesSection from '@/components/sections/CategoriesSection';
+import BestSellingProducts from '@/components/sections/BestSellingProducts';
+import { ProductCard } from '@/components/product/ProductCard';
+import { CategoryCard } from '@/components/category/CategoryCard';
+import { AddToCartButton } from '@/components/product/AddToCartButton';
+import { ProductRating } from '@/components/product/ProductRating';
+import { ProductCategoryBadge } from '@/components/product/ProductCategoryBadge';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { sheetMaskCategories } from '@/data/mockCategories';
+import { bestSellingProducts } from '@/data/mockProducts';
 
 export const metadata: Metadata = {
   title: 'Component Showcase | SheetMask',
@@ -43,6 +59,48 @@ export default function ComponentShowcasePage() {
 
         {/* Component Sections */}
         <div className="space-y-16">
+          {/* Hero Section */}
+          <ComponentSection
+            id="hero"
+            title="Hero Section"
+            description="Main hero section with split layout, headlines, search, and product showcase"
+          >
+            <div className="space-y-8">
+              <div className="rounded-lg border-2 border-dashed border-[var(--color-border)] overflow-hidden">
+                <HeroSection />
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Split layout (50/50) with angular border</li>
+                  <li>✅ Premium typography with serif headlines</li>
+                  <li>✅ Product search functionality</li>
+                  <li>✅ Organic pattern background overlay</li>
+                  <li>✅ Responsive mobile layout</li>
+                  <li>✅ MaskBar.pk brand messaging</li>
+                  <li>✅ Uses global CSS variables</li>
+                </ul>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Usage:</h4>
+                <pre className="bg-gray-100 p-4 rounded">
+{`import HeroSection from '@/components/sections/HeroSection';
+
+// In your page
+<HeroSection />`}
+                </pre>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Design Elements:</h4>
+                <ul className="space-y-2">
+                  <li>• Left Panel: Headlines, description, search bar</li>
+                  <li>• Right Panel: Product showcase with lifestyle imagery</li>
+                  <li>• Mobile: Stacked layout with overlay</li>
+                  <li>• Typography: Playfair Display (headings) + Inter (body)</li>
+                </ul>
+              </div>
+            </div>
+          </ComponentSection>
+
           {/* Header Section */}
           <ComponentSection
             id="header"
@@ -85,36 +143,312 @@ NEXT_PUBLIC_SITE_FULL_NAME="MaskBar by Mehroob"`}
             </div>
           </ComponentSection>
 
+          {/* Categories Section */}
+          <ComponentSection
+            id="categories"
+            title="Categories Section"
+            description="Product category navigation with grid layout and visual cards"
+          >
+            <div className="space-y-8">
+              <div className="rounded-lg border-2 border-dashed border-[var(--color-border)] overflow-hidden">
+                <CategoriesSection />
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Responsive grid layout (6 columns desktop, 2 mobile)</li>
+                  <li>✅ Category cards with icons and product counts</li>
+                  <li>✅ Uses Shadcn Card and Badge components</li>
+                  <li>✅ Hover effects and smooth transitions</li>
+                  <li>✅ Color-coded category icons</li>
+                  <li>✅ Product count badges</li>
+                  <li>✅ Uses global CSS variables</li>
+                </ul>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Usage:</h4>
+                <pre className="bg-gray-100 p-4 rounded">
+{`import CategoriesSection from '@/components/sections/CategoriesSection';
+
+// In your page
+<CategoriesSection />`}
+                </pre>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Component Structure:</h4>
+                <ul className="space-y-2">
+                  <li>• CategoriesSection: Main section container</li>
+                  <li>• CategoryCard: Individual category display</li>
+                  <li>• Mock data: 6 sheet mask categories</li>
+                  <li>• Responsive: Grid adapts to screen size</li>
+                </ul>
+              </div>
+            </div>
+          </ComponentSection>
+
+          {/* Best Selling Products Section */}
+          <ComponentSection
+            id="bestselling"
+            title="Best Selling Products"
+            description="Product catalog with grid layout, ratings, and add to cart functionality"
+          >
+            <div className="space-y-8">
+              <div className="rounded-lg border-2 border-dashed border-[var(--color-border)] overflow-hidden">
+                <BestSellingProducts />
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Responsive grid layout (4 columns desktop, 2 mobile)</li>
+                  <li>✅ Product cards with image, name, price, rating</li>
+                  <li>✅ Category badges and star ratings</li>
+                  <li>✅ Add to cart functionality</li>
+                  <li>✅ Hover effects and smooth transitions</li>
+                  <li>✅ Mock data for 4 sheet mask products</li>
+                  <li>✅ Uses global CSS variables</li>
+                </ul>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Usage:</h4>
+                <pre className="bg-gray-100 p-4 rounded">
+{`import BestSellingProducts from '@/components/sections/BestSellingProducts';
+
+// In your page
+<BestSellingProducts />`}
+                </pre>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Component Structure:</h4>
+                <ul className="space-y-2">
+                  <li>• BestSellingProducts: Main section container</li>
+                  <li>• ProductCard: Individual product display</li>
+                  <li>• Mock data: 4 sheet mask products</li>
+                  <li>• Responsive: Grid adapts to screen size</li>
+                </ul>
+              </div>
+            </div>
+          </ComponentSection>
+
+          {/* Footer Section */}
+          <ComponentSection
+            id="footer"
+            title="Footer Component"
+            description="Complete footer with brand info, navigation links, newsletter signup, and legal links"
+          >
+            <div className="space-y-8">
+              <div className="rounded-lg border-2 border-dashed border-[var(--color-border)] overflow-hidden">
+                <Footer />
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Component-based structure (Footer, FooterBrand, FooterLinks, FooterNewsletter)</li>
+                  <li>✅ Uses Shadcn Separator component</li>
+                  <li>✅ Newsletter signup with email validation</li>
+                  <li>✅ Organized link groups (Shop, Support, Company)</li>
+                  <li>✅ Brand information and contact details</li>
+                  <li>✅ Legal links and copyright</li>
+                  <li>✅ Responsive grid layout</li>
+                  <li>✅ Uses global CSS variables</li>
+                </ul>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Usage:</h4>
+                <pre className="bg-gray-100 p-4 rounded">
+{`import { Footer } from '@/components/layout/Footer';
+
+// In your layout
+<Footer />`}
+                </pre>
+
+                <h4 className="text-lg font-semibold mt-6 mb-3">Component Structure:</h4>
+                <ul className="space-y-2">
+                  <li>• Footer: Main footer container</li>
+                  <li>• FooterBrand: Brand logo, description, contact</li>
+                  <li>• FooterLinks: Navigation links grouped by category</li>
+                  <li>• FooterNewsletter: Email subscription form</li>
+                </ul>
+              </div>
+            </div>
+          </ComponentSection>
+
+          {/* ProductCard Component */}
+          <ComponentSection
+            id="productcard"
+            title="ProductCard Component"
+            description="Individual product card with image, details, rating, and add to cart button"
+          >
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {bestSellingProducts.slice(0, 3).map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Product image with hover scale effect</li>
+                  <li>✅ Category badge with color coding</li>
+                  <li>✅ Star rating display</li>
+                  <li>✅ Add to cart button with animations</li>
+                  <li>✅ Responsive design</li>
+                  <li>✅ Hover effects and transitions</li>
+                </ul>
+              </div>
+            </div>
+          </ComponentSection>
+
+          {/* CategoryCard Component */}
+          <ComponentSection
+            id="categorycard"
+            title="CategoryCard Component"
+            description="Individual category card with icon and hover effects"
+          >
+            <div className="space-y-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {sheetMaskCategories.map((category) => (
+                  <CategoryCard key={category.id} category={category} />
+                ))}
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Lucide React icons with color coding</li>
+                  <li>✅ Hover scale and color effects</li>
+                  <li>✅ Consistent card sizing</li>
+                  <li>✅ Subtle shadows for depth</li>
+                  <li>✅ Responsive grid layout</li>
+                </ul>
+              </div>
+            </div>
+          </ComponentSection>
+
           {/* Buttons Section */}
           <ComponentSection
             id="buttons"
-            title="Buttons"
-            description="Various button styles and states for user interactions"
+            title="Button Components"
+            description="Shadcn Button component with various variants and sizes"
           >
-            <div className="text-center py-12 text-[var(--color-text-secondary)]">
-              Button components will be displayed here
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Button variant="default">Default Button</Button>
+                <Button variant="secondary">Secondary Button</Button>
+                <Button variant="outline">Outline Button</Button>
+                <Button variant="ghost">Ghost Button</Button>
+                <Button variant="link">Link Button</Button>
+                <Button variant="destructive">Destructive Button</Button>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-semibold">Sizes:</h4>
+                <div className="flex gap-4 items-center">
+                  <Button size="sm">Small</Button>
+                  <Button size="default">Default</Button>
+                  <Button size="lg">Large</Button>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="font-semibold">Add to Cart Button:</h4>
+                <div className="flex gap-4">
+                  <AddToCartButton product={bestSellingProducts[0]} />
+                </div>
+              </div>
             </div>
           </ComponentSection>
 
           {/* Links Section */}
           <ComponentSection
             id="links"
-            title="Links"
-            description="Text links and navigation elements"
+            title="Link Components"
+            description="Navigation links and text links"
           >
-            <div className="text-center py-12 text-[var(--color-text-secondary)]">
-              Link components will be displayed here
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <h4 className="font-semibold">Navigation Links:</h4>
+                <div className="flex gap-6">
+                  <a href="#" className="text-[var(--color-primary)] hover:underline">Home</a>
+                  <a href="#" className="text-[var(--color-primary)] hover:underline">Products</a>
+                  <a href="#" className="text-[var(--color-primary)] hover:underline">About</a>
+                  <a href="#" className="text-[var(--color-primary)] hover:underline">Contact</a>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-semibold">Footer Links:</h4>
+                <div className="grid grid-cols-3 gap-6 text-sm">
+                  <div>
+                    <h5 className="font-semibold mb-2">Shop</h5>
+                    <ul className="space-y-1">
+                      <li><a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">All Products</a></li>
+                      <li><a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">Categories</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-2">Support</h5>
+                    <ul className="space-y-1">
+                      <li><a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">Contact</a></li>
+                      <li><a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">FAQ</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-2">Company</h5>
+                    <ul className="space-y-1">
+                      <li><a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">About</a></li>
+                      <li><a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">Careers</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </ComponentSection>
 
           {/* Cards Section */}
           <ComponentSection
             id="cards"
-            title="Cards"
-            description="Card components for displaying content and products"
+            title="Card Components"
+            description="Shadcn Card components and custom card variants"
           >
-            <div className="text-center py-12 text-[var(--color-text-secondary)]">
-              Card components will be displayed here
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Basic Card</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-[var(--color-text-secondary)]">
+                      This is a basic card component with header and content.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Product Card</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="h-32 bg-[var(--color-surface)] rounded-md"></div>
+                      <p className="text-sm text-[var(--color-text-secondary)]">
+                        Product description and details.
+                      </p>
+                      <Button size="sm" className="w-full">Add to Cart</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Category Card</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center space-y-3">
+                      <div className="text-3xl">💧</div>
+                      <p className="text-sm font-semibold">Hydrating Masks</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </ComponentSection>
 
@@ -122,21 +456,60 @@ NEXT_PUBLIC_SITE_FULL_NAME="MaskBar by Mehroob"`}
           <ComponentSection
             id="inputs"
             title="Form Inputs"
-            description="Input fields, textareas, and form controls"
+            description="Shadcn Input component and form elements"
           >
-            <div className="text-center py-12 text-[var(--color-text-secondary)]">
-              Input components will be displayed here
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Basic Inputs:</h4>
+                  <Input placeholder="Enter your email" type="email" />
+                  <Input placeholder="Search products..." />
+                  <Input placeholder="Enter quantity" type="number" />
+                </div>
+                
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Input with Labels:</h4>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Email Address</label>
+                    <Input placeholder="your@email.com" type="email" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Password</label>
+                    <Input placeholder="Enter password" type="password" />
+                  </div>
+                </div>
+              </div>
             </div>
           </ComponentSection>
 
           {/* Badges Section */}
           <ComponentSection
             id="badges"
-            title="Badges & Tags"
-            description="Labels, badges, and tag elements"
+            title="Badge Components"
+            description="Shadcn Badge component and product category badges"
           >
-            <div className="text-center py-12 text-[var(--color-text-secondary)]">
-              Badge components will be displayed here
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Shadcn Badge Variants:</h4>
+                  <div className="flex gap-4 flex-wrap">
+                    <Badge variant="default">Default</Badge>
+                    <Badge variant="secondary">Secondary</Badge>
+                    <Badge variant="outline">Outline</Badge>
+                    <Badge variant="destructive">Destructive</Badge>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h4 className="font-semibold">Product Category Badges:</h4>
+                  <div className="flex gap-4 flex-wrap">
+                    <ProductCategoryBadge category="Hydrating" />
+                    <ProductCategoryBadge category="Brightening" />
+                    <ProductCategoryBadge category="Anti-Aging" />
+                    <ProductCategoryBadge category="Acne Control" />
+                  </div>
+                </div>
+              </div>
             </div>
           </ComponentSection>
 
@@ -337,7 +710,13 @@ function ColorSwatch({
 
 // Categories data
 const categories = [
+  { id: 'hero', name: 'Hero Section' },
   { id: 'header', name: 'Header' },
+  { id: 'categories', name: 'Categories' },
+  { id: 'bestselling', name: 'Best Selling' },
+  { id: 'footer', name: 'Footer' },
+  { id: 'productcard', name: 'Product Card' },
+  { id: 'categorycard', name: 'Category Card' },
   { id: 'buttons', name: 'Buttons' },
   { id: 'links', name: 'Links' },
   { id: 'cards', name: 'Cards' },

@@ -1,0 +1,85 @@
+# Hero Section Design Guide
+
+## 🎯 Overview
+This guide details the hero section design for MaskBar.pk - a sophisticated, organic skincare brand hero that balances elegance with natural beauty elements.
+
+## 🎨 Design Analysis
+
+### Layout Structure
+- **Split Layout**: Two-panel vertical design (50/50 split)
+- **Left Panel**: Text-focused content area
+- **Right Panel**: Product showcase with lifestyle imagery
+- **Dynamic Border**: Angular white border separating panels for modern visual interest
+
+### Left Panel - Content Area
+
+#### Background & Texture
+- **Base**: Clean white background (#FFFFFF)
+- **Overlay**: Subtle organic pattern - light beige/pinkish-brown floral/vine graphics
+- **Purpose**: Adds organic elegance without distraction
+- **Opacity**: Very low (5-10%) to maintain readability
+
+#### Typography Hierarchy
+1. **Primary Headline**: "Natural & Organic"
+   - Font: Classic serif (Playfair Display)
+   - Color: Dark charcoal (#2B2B2B)
+   - Weight: 600-700
+   - Size: 3rem (--fs-2xl)
+
+2. **Secondary Headline**: "Skin Care"
+   - Font: Classic serif (Playfair Display)
+   - Color: Dark charcoal (#2B2B2B)
+   - Weight: 600-700
+   - Size: 3rem (--fs-2xl)
+
+3. **Body Text**: "USE OUR ORGANIC SKINCARE, YOU CAN HAVE BEAUTIFUL, LUMINOUS SKIN WITH JUST A COUPLE OF MINUTES OF EASY, DAILY CARE."
+   - Font: Sans-serif (Inter)
+   - Color: Dark charcoal (#2B2B2B)
+   - Weight: 400
+   - Size: 1.125rem (--fs-md)
+   - Line Height: 1.6
+
+#### Interactive Elements
+- **Search Bar**: 
+  - Background: White with rounded corners
+  - Placeholder: "Search..." in light gray
+  - Border: Subtle border using --color-border
+  - Button: Dusty rose/muted reddish-brown with white search icon
+
+### Right Panel - Product Showcase
+
+## 📱 Responsive Behavior
+
+### Desktop (1200px+)
+- Split 50/50 layout maintained
+- Full product showcase visible
+- Search bar prominently displayed
+
+### Tablet (768px - 1199px)
+- Maintains split layout with adjusted proportions
+- Slightly reduced font sizes
+- Product image scales proportionally
+
+### Mobile (320px - 767px)
+- Stacked layout (vertical)
+- Product showcase faded black with content area and searhcbar over it
+- Typography scales down appropriately
+
+## 🧩 Component Structure
+
+### HeroSection Component
+```
+HeroSection/
+├── HeroContent (Left Panel)
+│   ├── OrganicPattern (Background overlay)
+│   ├── Headlines
+│   │   ├── PrimaryHeadline
+│   │   └── SecondaryHeadline
+│   ├── Description
+│   └── SearchBar
+│       ├── SearchInput
+│       └── SearchButton
+├── HeroImage (Right Panel)
+│   ├── ProductShowcase
+│   ├── LifestyleBackground
+│   └── AngularBorder

@@ -64,7 +64,7 @@ export function Header() {
             <DropdownMenuTrigger className="rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]">
               Shop ▾
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-48">
+            <DropdownMenuContent align="center" className="w-48 z-[var(--z-popover)]">
               <DropdownMenuItem asChild>
                 <Link href="/products?category=hydrating">Hydrating Masks</Link>
               </DropdownMenuItem>
@@ -151,7 +151,7 @@ export function Header() {
                 <User className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuContent align="end" className="w-48 z-[var(--z-popover)]">
               {session ? (
                 <>
                   <div className="px-2 py-1.5 text-sm">
