@@ -16,7 +16,7 @@ export function ProductRating({ rating, reviews }: ProductRatingProps) {
             key={i}
             className={`text-xs ${
               i < Math.floor(rating)
-                ? "text-yellow-400"
+                ? "text-yellow-500"
                 : "text-gray-300"
             }`}
           >
@@ -24,7 +24,7 @@ export function ProductRating({ rating, reviews }: ProductRatingProps) {
           </span>
         ))}
       </div>
-      <span className="text-xs text-[var(--color-text-secondary)]">
+      <span className="text-xs text-[#8B8B8B]">
         {rating} ({reviews} reviews)
       </span>
     </div>

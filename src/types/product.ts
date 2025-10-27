@@ -2,27 +2,86 @@
  * Product related types
  */
 
-export interface Product {
-  id: string;
+// Backend Brand reference
+export interface BrandReference {
+  _id: string;
   name: string;
   slug: string;
-  description: string;
-  shortDescription?: string;
-  price: number;
-  discountedPrice?: number;
+  logo?: string;
+}
+
+// Backend Category reference
+export interface CategoryReference {
+  _id: string;
+  name: string;
+  slug: string;
+  icon?: string;
+  parent?: string;
+}
+
+// Main Product interface matching backend schema
+export interface Product {
+  _id: string;
+  name: string;
+  slug: string;
   sku: string;
-  stock: number;
+  brand: string; // Brand name string
+  brandId: BrandReference;
+  category: string; // Category name string
+  categoryId: CategoryReference;
+  type?: string;
+  
+  // Media
   images: string[];
-  category: ProductCategory;
-  skinTypes: SkinType[];
-  ingredients: string[];
-  benefits: string[];
-  howToUse: string;
-  featured: boolean;
-  rating: number;
-  reviewCount: number;
+  thumbnail?: string;
+  video?: string;
+  
+  // Descriptions
+  shortDescription?: string;
+  description?: string;
+  longDescription?: string;
+  
+  // Product Details
+  ingredients?: string[];
+  howToUse?: string;
+  skinType?: SkinType[];
+  benefits?: string[];
+  countryOfOrigin?: string;
+  
+  // Pricing
+  price: number;
+  discountPrice?: number;
+  discountPercent?: number;
+  finalPrice: number;
+  calculatedDiscountPercent?: number;
+  
+  // Stock & Status
+  stock: number;
+  inStock: boolean;
+  isActive: boolean;
+  
+  // Features
+  isFeatured: boolean;
+  isNewArrival: boolean;
+  isBestSeller: boolean;
+  
+  // Stats
+  sold: number;
+  averageRating: number;
+  totalReviews: number;
+  
+  // SEO
+  seoTitle?: string;
+  seoDescription?: string;
+  metaKeywords?: string[];
+  
+  // Tags
+  tags?: string[];
+  
+  // Timestamps
   createdAt: string;
   updatedAt: string;
+  createdBy?: string;
 }
 
 export type ProductCategory =
@@ -32,7 +91,7 @@ export type ProductCategory =
   | 'purifying'
   | 'soothing';
 
-export type SkinType = 'dry' | 'oily' | 'combination' | 'sensitive' | 'normal';
+export type SkinType = 'Dry' | 'Oily' | 'Combination' | 'Sensitive' | 'Normal' | 'All';
 
 export interface ProductVariant {
   id: string;

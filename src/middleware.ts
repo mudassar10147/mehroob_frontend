@@ -10,8 +10,8 @@ export function middleware(request: NextRequest) {
   // Get auth token from cookies or headers
   const token = request.cookies.get('auth_token')?.value;
 
-  // Define protected routes
-  const protectedRoutes = ['/profile', '/orders', '/checkout'];
+  // Define protected routes (checkout removed for guest checkout)
+  const protectedRoutes = ['/profile', '/orders'];
   const authRoutes = ['/login', '/register'];
 
   // Check if current path is protected
@@ -52,7 +52,7 @@ export const config = {
     // Only run on these specific protected routes
     '/profile/:path*',
     '/orders/:path*',
-    '/checkout/:path*',
+    // '/checkout/:path*', // Removed - allow guest checkout
     '/login',
     '/register',
   ],

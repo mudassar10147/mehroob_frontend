@@ -5,14 +5,32 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com', // Cloudinary
+        hostname: 'bioaqua.com.pk',
       },
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com', // For demo images
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.com.pk',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
       },
     ],
-    formats: ['image/avif', 'image/webp'],
+    unoptimized: true,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox; style-src 'self' 'unsafe-inline';",
   },
   experimental: {
     optimizePackageImports: ['lucide-react'],

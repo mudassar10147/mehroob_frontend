@@ -31,22 +31,22 @@ export function CategoryCard({ category }: CategoryCardProps) {
   
   return (
     <Link href={`/products?category=${category.slug}`}>
-      <div className="category-card group bg-white border border-[var(--color-border)] shadow-[var(--shadow-sm)] hover:border-[var(--color-primary)] hover:shadow-[var(--shadow-lg)] rounded-[var(--border-radius)] p-6 sm:p-8 transition-all duration-[var(--transition-medium)] ease-in-out cursor-pointer h-full flex flex-col items-center justify-center">
+      <div className="category-card group bg-white border border-[var(--color-border)] hover:border-[var(--color-primary)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-lg)] rounded-xl p-6 transition-all duration-[var(--transition-medium)] ease-in-out cursor-pointer h-full flex flex-col items-center justify-center hover:-translate-y-1 min-h-[140px]">
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div 
-            className="p-4 rounded-full group-hover:scale-110 transition-all duration-300"
-            style={{ backgroundColor: `${category.color}15` }}
+            className="p-3 rounded-lg transition-all duration-[var(--transition-medium)] group-hover:scale-110"
+            style={{ backgroundColor: category.color + '15' }}
           >
             <IconComponent 
-              className="h-8 w-8 group-hover:scale-110 transition-transform duration-300"
+              className="h-7 w-7 transition-all duration-[var(--transition-medium)]"
               style={{ color: category.color }}
             />
           </div>
         </div>
 
         {/* Category Name */}
-        <h3 className="font-[var(--font-heading)] text-base sm:text-lg font-semibold text-[var(--color-text-primary)] text-center group-hover:text-[var(--color-primary)] transition-colors duration-300">
+        <h3 className="font-[var(--font-heading)] text-base font-semibold text-[var(--color-text-primary)] text-center group-hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-medium)]">
           {category.name}
         </h3>
       </div>

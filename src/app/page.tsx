@@ -4,7 +4,7 @@ import BestSellingProducts from "@/components/sections/BestSellingProducts";
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative">
       <HeroSection />
       <CategoriesSection />
       <BestSellingProducts />

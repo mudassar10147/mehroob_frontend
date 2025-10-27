@@ -14,7 +14,7 @@ interface FooterLinkGroupProps {
 function FooterLinkGroup({ title, links }: FooterLinkGroupProps) {
   return (
     <div className="footer-link-group">
-      <h4 className="font-[var(--font-heading)] text-base font-semibold text-[var(--color-text-primary)] mb-4">
+      <h4 className="font-[var(--font-heading)] text-base font-semibold text-[var(--color-text-bold)] mb-4">
         {title}
       </h4>
       <ul className="space-y-3">
@@ -22,7 +22,7 @@ function FooterLinkGroup({ title, links }: FooterLinkGroupProps) {
           <li key={index}>
             <Link 
               href={link.href}
-              className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
+              className="text-sm text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
             >
               {link.label}
             </Link>
@@ -48,11 +48,11 @@ export function FooterLinks() {
     {
       title: "Support",
       links: [
+        { label: "Track Order", href: "/track-order" },
         { label: "Contact Us", href: "/contact" },
         { label: "FAQ", href: "/faq" },
         { label: "Shipping Info", href: "/shipping" },
         { label: "Returns", href: "/returns" },
-        { label: "Size Guide", href: "/size-guide" },
       ],
     },
     {

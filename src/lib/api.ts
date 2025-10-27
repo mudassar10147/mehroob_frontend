@@ -14,6 +14,7 @@ class ApiClient {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: false,
     });
 
     this.setupInterceptors();
@@ -51,19 +52,19 @@ class ApiClient {
               // Unauthorized - clear token and redirect to login
               if (typeof window !== 'undefined') {
                 localStorage.removeItem('auth_token');
-                window.location.href = '/login';
+                // Don't redirect for public endpoints
+                if (!error.config?.url?.includes('/products')) {
+                  window.location.href = '/login';
+                }
               }
               break;
             case 403:
-              // Forbidden
               console.error('Access forbidden');
               break;
             case 404:
-              // Not found
               console.error('Resource not found');
               break;
             case 500:
-              // Server error
               console.error('Server error');
               break;
           }
@@ -149,23 +150,46 @@ export const api = {
     getAll: (params?: {
       page?: number;
       limit?: number;
-      category?: string;
+      categoryId?: string;
+      brandId?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      skinType?: string;
       search?: string;
+      isActive?: boolean;
+      isFeatured?: boolean;
+      isNewArrival?: boolean;
+      isBestSeller?: boolean;
+      inStock?: boolean;
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
     }) => apiClient.get('/products', { params }),
     getById: (id: string) => apiClient.get(`/products/${id}`),
+    getBySlug: (slug: string) => apiClient.get(`/products/slug/${slug}`),
+    getFeatured: (limit?: number) => apiClient.get('/products/featured', { params: { limit } }),
+    getNewArrivals: (limit?: number) => apiClient.get('/products/new', { params: { limit } }),
+    getBestSellers: (limit?: number) => apiClient.get('/products/bestsellers', { params: { limit } }),
+    getByBrand: (brandId: string, params?: { page?: number; limit?: number }) => 
+      apiClient.get(`/products/brand/${brandId}`, { params }),
+    getByCategory: (categoryId: string, params?: { page?: number; limit?: number }) => 
+      apiClient.get(`/products/category/${categoryId}`, { params }),
+    getStats: () => apiClient.get('/products/stats'),
     create: (data: any) => apiClient.post('/products', data),
     update: (id: string, data: any) => apiClient.put(`/products/${id}`, data),
     delete: (id: string) => apiClient.delete(`/products/${id}`),
+    updateStock: (id: string, stock: number) => 
+      apiClient.put(`/products/${id}/stock`, { stock }),
   },
 
   // Orders endpoints
   orders: {
-    getAll: (params?: { page?: number; limit?: number }) =>
-      apiClient.get('/orders', { params }),
-    getById: (id: string) => apiClient.get(`/orders/${id}`),
     create: (data: any) => apiClient.post('/orders', data),
-    updateStatus: (id: string, status: string) =>
-      apiClient.patch(`/orders/${id}/status`, { status }),
+    getMyOrders: (params?: { page?: number; limit?: number }) =>
+      apiClient.get('/orders/my-orders', { params }),
+    getById: (id: string) => apiClient.get(`/orders/${id}`),
+    cancel: (id: string) => apiClient.put(`/orders/${id}/cancel`),
+    track: (data: { orderNumber: string; email?: string; phone?: string }) => 
+      apiClient.post('/orders/track', data),
   },
 
   // Cart endpoints (if backend manages cart)

@@ -4,17 +4,39 @@
 
 :root {
   /* 🎨 Brand Colors */
-  --color-primary: #C9A9A6;       /* Blush rose - accent color */
-  --color-secondary: #E0C8B1;     /* Soft beige - secondary tone */
-  --color-background: #FFFFFF;    /* Base background */
+  --color-primary: #D5E4C4;       /* Main primary color - dark */
+  --color-primary-light: #F2FAEA; /* Main primary color - light */
+  --color-background: #FAF9F7;    /* Base background */
   --color-surface: #F6F1EE;       /* Section backgrounds */
-  --color-text-primary: #2B2B2B;  /* Dark text */
-  --color-text-secondary: #7A7A7A;/* Muted text */
+  --color-text-primary: #515150;  /* Normal text */
+  --color-text-bold: #1D1D1D;     /* Highlighted bold text */
+  --color-text-secondary: #ebebeb;/* Muted text */
   --color-border: #EDEDED;        /* Soft divider lines */
-
+  
+  /* Secondary colors */
+  --color-secondary-1: #F1DEC6;  /* Used for deals, highlight info, discounts */
+  --color-secondary-2: #B9C9A8;  /* Used for categories of different products */
+  --color-secondary-3: #EFE1DF;  /* Used for categories of different products */
+  
+  /* Product card */
+  --color-product-card: #F2F4F1;
+  
+  /* Button type 1 - Product card */
+  --color-button-1-idle-bg: #DDE5D7;
+  --color-button-1-idle-text: #5E5E5E;
+  --color-button-1-hover-bg: #E7D8CB;
+  --color-button-1-hover-text: #3C3C3C;
+  --color-button-1-opacity: 0.77;
+  
+  /* Button type 2 */
+  --color-button-2: #525252;
+  
+  /* Sold out / Out of stock */
+  --color-sold-out: #F3DBC0;
+  
   /* ✍️ Typography */
-  --font-heading: "Playfair Display", serif;
-  --font-body: "Inter", sans-serif;
+  --font-heading: "Avenir Next", sans-serif;
+  --font-body: "Avenir Next", sans-serif;
 
   /* 🧩 Font Sizes */
   --fs-xs: 0.75rem;
@@ -135,7 +157,7 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--color-text-primary);
-  background: var(--color-background);
+  background: #FAF9F7;  /* New background color */
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -151,13 +173,17 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 🔗 Link Styles */
 a {
-  color: var(--color-primary);
   text-decoration: none;
   transition: var(--transition-fast);
 }
 
 a:hover {
   opacity: 0.8;
+}
+
+/* Style only unstyled links, not components with specific classes */
+a:not([class*="text-"]):not([class*="bg-"]) {
+  color: var(--color-primary);
 }
 
 /* 🖼️ Image Optimization */
@@ -191,6 +217,7 @@ img {
   background: #b89895;
 }
 
+/* stylelint-disable-next-line */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

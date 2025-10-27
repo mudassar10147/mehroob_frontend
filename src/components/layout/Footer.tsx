@@ -28,36 +28,33 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Separator */}
-        <Separator className="mb-8" />
-
         {/* Bottom Footer */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          {/* Copyright */}
-          <div className="text-sm text-[var(--color-text-secondary)]">
-            © 2024 MaskBar by Mehroob. All rights reserved.
-          </div>
-
+        <div className="flex flex-col items-center gap-4 text-center">
           {/* Legal Links */}
-          <div className="flex gap-6 text-sm">
+          <div className="flex flex-wrap justify-center gap-6 text-sm">
             <a 
               href="/privacy" 
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
+              className="text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
             >
               Privacy Policy
             </a>
             <a 
               href="/terms" 
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
+              className="text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
             >
               Terms of Service
             </a>
             <a 
               href="/cookies" 
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
+              className="text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
             >
               Cookie Policy
             </a>
+          </div>
+          
+          {/* Copyright */}
+          <div className="text-sm text-[var(--color-text-primary)]">
+            © 2024 MaskBar by Mehroob. All rights reserved.
           </div>
         </div>
       </div>

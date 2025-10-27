@@ -20,17 +20,17 @@ const calculateCartTotals = (items: CartItem[]): Omit<Cart, 'items'> => {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-  const tax = subtotal * 0.1; // 10% tax
-  const shipping = subtotal > 50 ? 0 : 5; // Free shipping over $50
+  const tax = 0; // No tax for now (backend doesn't calculate it)
+  const shipping = subtotal >= 3000 ? 0 : 150; // Free shipping over PKR 3000, else PKR 150
   const discount = 0;
   const total = subtotal + tax + shipping - discount;
 
   return {
-    subtotal: Number(subtotal.toFixed(2)),
-    tax: Number(tax.toFixed(2)),
-    shipping: Number(shipping.toFixed(2)),
-    discount: Number(discount.toFixed(2)),
-    total: Number(total.toFixed(2)),
+    subtotal: Number(subtotal.toFixed(0)),
+    tax: Number(tax.toFixed(0)),
+    shipping: Number(shipping.toFixed(0)),
+    discount: Number(discount.toFixed(0)),
+    total: Number(total.toFixed(0)),
   };
 };
 

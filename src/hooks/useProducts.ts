@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Product, ProductFilters } from '@/types/product';
-import { PaginatedResponse } from '@/types/api';
+import { BackendPaginatedResponse } from '@/types/api';
 import { api } from '@/lib/api';
 
 /**
@@ -15,7 +15,7 @@ export function useProducts(initialFilters?: ProductFilters) {
     currentPage: 1,
     totalPages: 1,
     totalCount: 0,
-    pageSize: 12,
+    pageSize: 20,
   });
 
   // Fetch products
@@ -25,19 +25,33 @@ export function useProducts(initialFilters?: ProductFilters) {
       setError(null);
 
       try {
-        const response: PaginatedResponse<Product> = await api.products.getAll(
-          {
-            page,
-            limit: pagination.pageSize,
-            category: filters.category,
-            search: filters.search,
-          }
-        );
+        const response: BackendPaginatedResponse<Product> = await api.products.getAll({
+          page,
+          limit: pagination.pageSize,
+          categoryId: filters.category,
+          skinType: filters.skinType,
+          minPrice: filters.priceMin,
+          maxPrice: filters.priceMax,
+          search: filters.search,
+          inStock: filters.inStock,
+          sortBy: filters.sortBy?.split('-')[0],
+          sortOrder: filters.sortBy?.split('-')[1] as 'asc' | 'desc',
+          isActive: true, // Only show active products
+        });
 
-        setProducts(response.data);
-        setPagination(response.meta);
+        if (response.success && response.data) {
+          setProducts(response.data.products);
+          setPagination({
+            currentPage: response.data.pagination.current,
+            totalPages: response.data.pagination.pages,
+            totalCount: response.data.pagination.total,
+            pageSize: response.data.pagination.limit,
+          });
+        }
       } catch (err: any) {
+        console.error('Error fetching products:', err);
         setError(err.response?.data?.message || 'Failed to fetch products');
+        setProducts([]);
       } finally {
         setIsLoading(false);
       }
