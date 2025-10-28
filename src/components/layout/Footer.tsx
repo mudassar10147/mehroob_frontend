@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Separator } from "@/components/ui/separator";
 import { FooterBrand } from "./FooterBrand";
 import { FooterLinks } from "./FooterLinks";
 import { FooterNewsletter } from "./FooterNewsletter";

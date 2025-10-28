@@ -13,7 +13,7 @@ function SuccessPageContent() {
   const orderId = searchParams.get("id");
   const email = searchParams.get("email");
   const phone = searchParams.get("phone");
-  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [orderDetails, setOrderDetails] = useState<Record<string, unknown> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,17 +23,17 @@ function SuccessPageContent() {
         try {
           setIsLoading(true);
           // Use track endpoint since we have email/phone
-          const response: any = await api.orders.track({
+          const response: Record<string, unknown> = await api.orders.track({
             orderNumber: orderNumber || '',
             email: email || undefined,
             phone: phone || undefined,
-          });
+          }) as Record<string, unknown>;
           
-          if (response.success && response.data?.order) {
-            setOrderDetails(response.data.order);
+          if (response.success && (response.data as Record<string, unknown>)?.order) {
+            setOrderDetails((response.data as Record<string, unknown>).order as Record<string, unknown>);
           }
-        } catch (err: any) {
-          console.error('Error fetching order:', err);
+        } catch {
+          // Error fetching order
           setError('Failed to load order details');
         } finally {
           setIsLoading(false);
@@ -94,7 +94,7 @@ function SuccessPageContent() {
               Thank you for your purchase!
             </p>
             <p className="text-lg text-[var(--color-text-secondary)] mb-8">
-              We've received your order and will process it shortly. You'll receive a confirmation email soon.
+              We&apos;ve received your order and will process it shortly. You&apos;ll receive a confirmation email soon.
             </p>
 
             {/* Order Number - More Prominent */}
@@ -141,7 +141,7 @@ function SuccessPageContent() {
               <ol className="space-y-3 text-blue-900">
                 <li className="flex gap-3 items-start">
                   <span className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-sm">1</span>
-                  <span className="pt-1"><strong>Order Confirmation:</strong> We'll confirm your order via email and SMS</span>
+                  <span className="pt-1"><strong>Order Confirmation:</strong> We&apos;ll confirm your order via email and SMS</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-sm">2</span>
@@ -149,7 +149,7 @@ function SuccessPageContent() {
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-sm">3</span>
-                  <span className="pt-1"><strong>Tracking:</strong> You'll receive tracking information once shipped</span>
+                  <span className="pt-1"><strong>Tracking:</strong> You&apos;ll receive tracking information once shipped</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-sm">4</span>
@@ -163,7 +163,7 @@ function SuccessPageContent() {
             </div>
 
             {/* Order Information Grid */}
-            {orderDetails && (
+            {orderDetails && (orderDetails as { shippingAddress?: Record<string, unknown>, paymentMethod?: unknown }).shippingAddress && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 {/* Delivery Address */}
                 <div className="bg-[var(--color-surface)] rounded-lg p-6">
@@ -173,16 +173,17 @@ function SuccessPageContent() {
                   </h3>
                   <div className="space-y-2 text-sm text-[var(--color-text-secondary)]">
                     <p className="font-medium text-[var(--color-text-primary)]">
-                      {orderDetails.shippingAddress.fullName}
+                      {String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.fullName || '')}
                     </p>
-                    <p>{orderDetails.shippingAddress.address}</p>
+                    <p>{String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.address || '')}</p>
                     <p>
-                      {orderDetails.shippingAddress.city}{orderDetails.shippingAddress.state && `, ${orderDetails.shippingAddress.state}`}
+                      {String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.city || '')}
+                      {String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.state || '') && `, ${String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.state || '')}`}
                     </p>
-                    {orderDetails.shippingAddress.postalCode && (
-                      <p>{orderDetails.shippingAddress.postalCode}</p>
+                    {String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.postalCode || '') && (
+                      <p>{String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.postalCode || '')}</p>
                     )}
-                    <p>{orderDetails.shippingAddress.country || 'Pakistan'}</p>
+                    <p>{String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.country || 'Pakistan')}</p>
                   </div>
                 </div>
 
@@ -193,18 +194,18 @@ function SuccessPageContent() {
                     Contact Information
                   </h3>
                   <div className="space-y-3">
-                    {orderDetails.shippingAddress.email && (
+                    {String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.email || '') && (
                       <div className="flex items-center gap-3 text-sm">
                         <Mail className="w-4 h-4 text-[var(--color-text-secondary)]" />
                         <span className="text-[var(--color-text-secondary)]">
-                          {orderDetails.shippingAddress.email}
+                          {String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.email || '')}
                         </span>
                       </div>
                     )}
                     <div className="flex items-center gap-3 text-sm">
                       <Phone className="w-4 h-4 text-[var(--color-text-secondary)]" />
                       <span className="text-[var(--color-text-secondary)]">
-                        {orderDetails.shippingAddress.phone}
+                        {String((orderDetails as { shippingAddress?: Record<string, unknown> }).shippingAddress?.phone || '')}
                       </span>
                     </div>
                   </div>
@@ -221,7 +222,7 @@ function SuccessPageContent() {
                     </div>
                     <div>
                       <p className="font-medium text-[var(--color-text-primary)]">
-                        {orderDetails.paymentMethod}
+                        {String((orderDetails as { paymentMethod?: unknown }).paymentMethod || 'COD')}
                       </p>
                       <p className="text-sm text-[var(--color-text-secondary)]">
                         Pay when you receive
@@ -238,21 +239,21 @@ function SuccessPageContent() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm text-[var(--color-text-secondary)]">
                       <span>Subtotal</span>
-                      <span>PKR {orderDetails.itemsPrice?.toLocaleString()}</span>
+                      <span>PKR {Number((orderDetails as { itemsPrice?: number }).itemsPrice || 0).toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-sm text-[var(--color-text-secondary)]">
                       <span>Shipping</span>
-                      <span>{orderDetails.shippingPrice === 0 ? <span className="text-green-600">FREE</span> : `PKR ${orderDetails.shippingPrice?.toLocaleString()}`}</span>
+                      <span>{(orderDetails as { shippingPrice?: number }).shippingPrice === 0 ? <span className="text-green-600">FREE</span> : `PKR ${Number((orderDetails as { shippingPrice?: number }).shippingPrice || 0).toLocaleString()}`}</span>
                     </div>
-                    {orderDetails.taxPrice > 0 && (
+                    {((orderDetails as { taxPrice?: number }).taxPrice || 0) > 0 && (
                       <div className="flex justify-between text-sm text-[var(--color-text-secondary)]">
                         <span>Tax</span>
-                        <span>PKR {orderDetails.taxPrice?.toLocaleString()}</span>
+                        <span>PKR {Number((orderDetails as { taxPrice?: number }).taxPrice || 0).toLocaleString()}</span>
                       </div>
                     )}
                     <div className="flex justify-between text-xl font-semibold text-[var(--color-text-primary)] pt-2 border-t border-[var(--color-border)]">
                       <span>Total</span>
-                      <span>PKR {orderDetails.totalPrice?.toLocaleString()}</span>
+                      <span>PKR {Number((orderDetails as { totalPrice?: number }).totalPrice || 0).toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -260,35 +261,35 @@ function SuccessPageContent() {
             )}
 
             {/* Order Items */}
-            {orderDetails && orderDetails.orderItems && (
+            {orderDetails && (orderDetails as { orderItems?: Array<Record<string, unknown>> }).orderItems && (
               <div className="bg-[var(--color-surface)] rounded-lg p-6 mb-8">
                 <h3 className="font-[var(--font-heading)] text-lg font-semibold text-[var(--color-text-primary)] mb-4">
-                  Order Items ({orderDetails.orderItems.length})
+                  Order Items ({(orderDetails as { orderItems?: Array<unknown> }).orderItems?.length})
                 </h3>
                 <div className="space-y-4">
-                  {orderDetails.orderItems.map((item: any, index: number) => (
+                  {((orderDetails as { orderItems?: Array<Record<string, unknown>> }).orderItems || []).map((item: Record<string, unknown>, index: number) => (
                     <div
-                      key={item._id || index}
+                      key={String(item._id || index)}
                       className="flex items-center gap-4 pb-4 border-b border-[var(--color-border)] last:border-0"
                     >
                       <div className="text-[var(--color-text-secondary)] text-sm font-medium">
-                        {item.quantity}x
+                        {Number(item.quantity || 0)}x
                       </div>
                       <div className="flex-1">
                         <p className="font-medium text-[var(--color-text-primary)]">
-                          {item.name}
+                          {String(item.name || '')}
                         </p>
                         <p className="text-sm text-[var(--color-text-secondary)]">
-                          PKR {item.price?.toLocaleString()} each
+                          PKR {Number(item.price || 0).toLocaleString()} each
                         </p>
-                        {item.sku && (
+                        {String(item.sku || '') && (
                           <p className="text-xs text-[var(--color-text-secondary)]">
-                            SKU: {item.sku}
+                            SKU: {String(item.sku || '')}
                           </p>
                         )}
                       </div>
                       <div className="font-semibold text-[var(--color-text-primary)]">
-                        PKR {(item.price * item.quantity).toLocaleString()}
+                        PKR {(Number(item.price || 0) * Number(item.quantity || 0)).toLocaleString()}
                       </div>
                     </div>
                   ))}

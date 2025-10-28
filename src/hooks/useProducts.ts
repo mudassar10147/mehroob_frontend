@@ -25,7 +25,7 @@ export function useProducts(initialFilters?: ProductFilters) {
       setError(null);
 
       try {
-        const response: BackendPaginatedResponse<Product> = await api.products.getAll({
+        const response = await api.products.getAll({
           page,
           limit: pagination.pageSize,
           categoryId: filters.category,
@@ -37,7 +37,7 @@ export function useProducts(initialFilters?: ProductFilters) {
           sortBy: filters.sortBy?.split('-')[0],
           sortOrder: filters.sortBy?.split('-')[1] as 'asc' | 'desc',
           isActive: true, // Only show active products
-        });
+        }) as BackendPaginatedResponse<Product>;
 
         if (response.success && response.data) {
           setProducts(response.data.products);
@@ -114,7 +114,7 @@ export function useProduct(productId: string) {
       setError(null);
 
       try {
-        const data = await api.products.getById(productId);
+        const data = await api.products.getById(productId) as Product;
         setProduct(data);
       } catch (err: any) {
         setError(err.response?.data?.message || 'Failed to fetch product');

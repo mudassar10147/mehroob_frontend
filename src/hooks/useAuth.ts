@@ -18,7 +18,7 @@ export function useAuth() {
         if (token) {
           // Verify token and get user data
           const userData = await api.auth.me();
-          setUser(userData);
+          setUser(userData as User | null);
           setIsAuthenticated(true);
         }
       } catch (error) {
@@ -37,7 +37,7 @@ export function useAuth() {
   // Login function
   const login = useCallback(async (email: string, password: string) => {
     try {
-      const response = await api.auth.login({ email, password });
+      const response = await api.auth.login({ email, password }) as { token: string; user: User };
       localStorage.setItem('auth_token', response.token);
       setUser(response.user);
       setIsAuthenticated(true);
@@ -54,7 +54,7 @@ export function useAuth() {
   const register = useCallback(
     async (name: string, email: string, password: string) => {
       try {
-        const response = await api.auth.register({ name, email, password });
+        const response = await api.auth.register({ name, email, password }) as { token: string; user: User };
         localStorage.setItem('auth_token', response.token);
         setUser(response.user);
         setIsAuthenticated(true);
@@ -85,7 +85,7 @@ export function useAuth() {
   // Update user profile
   const updateProfile = useCallback(async (data: Partial<User>) => {
     try {
-      const updatedUser = await api.user.updateProfile(data);
+      const updatedUser = await api.user.updateProfile(data) as User;
       setUser(updatedUser);
       return { success: true };
     } catch (error: any) {

@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 /**
  * Global Error Component
  * Handles errors that occur during rendering
@@ -32,12 +34,12 @@ export default function Error({
             Try again
           </button>
           
-          <a
+          <Link
             href="/"
             className="inline-flex items-center rounded-md bg-gray-200 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-300"
           >
             Go home
-          </a>
+          </Link>
         </div>
 
         {process.env.NODE_ENV === 'development' && error.digest && (

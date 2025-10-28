@@ -12,7 +12,7 @@ import { CheckCircle } from "lucide-react";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, total, clearCart } = useCartStore();
+  const { items, clearCart } = useCartStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [orderConfirmation, setOrderConfirmation] = useState<any>(null);
@@ -72,7 +72,7 @@ export default function CheckoutPage() {
         throw new Error(response.message || 'Failed to place order');
       }
     } catch (error: any) {
-      console.error("❌ Order placement error:", error);
+      // Error handling
       
       // Handle specific error cases
       if (error.response?.data?.message) {

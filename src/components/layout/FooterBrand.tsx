@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 
 export function FooterBrand() {
   return (

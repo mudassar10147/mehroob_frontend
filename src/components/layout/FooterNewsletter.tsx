@@ -3,13 +3,12 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mail, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 export function FooterNewsletter() {
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implement newsletter subscription
-    console.log("Newsletter subscription submitted");
   };
 
   return (

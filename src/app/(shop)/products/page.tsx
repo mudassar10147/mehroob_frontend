@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ShopHeader } from "@/components/shop/ShopHeader";
 import { ProductFilters, FilterState } from "@/components/shop/ProductFilters";
@@ -8,6 +9,7 @@ import { useProducts } from "@/hooks/useProducts";
 import { ProductFilters as ProductFiltersType } from "@/types/product";
 
 export default function ProductsPage() {
+  const searchParams = useSearchParams();
   const [filters, setFilters] = useState<FilterState>({
     categories: [],
     priceRange: [0, 5000],
@@ -16,8 +18,12 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState("featured");
   const [showFilters, setShowFilters] = useState(false);
 
+  // Read search query from URL
+  const searchQuery = searchParams.get("search");
+
   // Convert FilterState to ProductFiltersType
   const apiFilters: ProductFiltersType = {
+    search: searchQuery || undefined,
     priceMin: filters.priceRange[0],
     priceMax: filters.priceRange[1],
     sortBy: sortBy === "featured" ? undefined : 
@@ -28,6 +34,18 @@ export default function ProductsPage() {
 
   // Fetch products from API
   const { products, isLoading, error, pagination } = useProducts(apiFilters);
+  
+  // Update filters when search query changes
+  useEffect(() => {
+    if (searchQuery) {
+      // Clear other filters when searching
+      setFilters({
+        categories: [],
+        priceRange: [0, 5000],
+        sortBy: "featured",
+      });
+    }
+  }, [searchQuery]);
 
   return (
     <div className="products-page">
@@ -36,6 +54,7 @@ export default function ProductsPage() {
         title="Shop All Masks"
         description="Discover our curated collection of premium sheet masks. Each mask is carefully selected to bring you the best in skincare."
         productCount={pagination.totalCount}
+        searchQuery={searchQuery}
       />
 
       {/* Products Section */}

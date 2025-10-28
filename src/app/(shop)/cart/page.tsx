@@ -44,7 +44,7 @@ export default function CartPage() {
                 Your cart is empty
               </h2>
               <p className="text-[var(--color-text-secondary)] mb-8">
-                Looks like you haven't added anything to your cart yet. Explore our collection of premium sheet masks.
+                Looks like you haven&apos;t added anything to your cart yet. Explore our collection of premium sheet masks.
               </p>
               <Link href="/products">
                 <Button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 text-white px-8 py-6">

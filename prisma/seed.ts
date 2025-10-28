@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, ProductCategory, SkinType } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +13,7 @@ async function main() {
       email: 'admin@sheetmask.com',
       name: 'Admin User',
       role: 'ADMIN',
-      emailVerified: true,
+      emailVerified: new Date(),
     },
   });
 
@@ -27,7 +27,7 @@ async function main() {
       email: 'customer@example.com',
       name: 'Jane Doe',
       role: 'CUSTOMER',
-      emailVerified: true,
+      emailVerified: new Date(),
     },
   });
 
@@ -49,8 +49,8 @@ async function main() {
         'https://images.unsplash.com/photo-1596755389378-c31d21fd1273',
         'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908',
       ],
-      category: 'HYDRATING',
-      skinTypes: ['DRY', 'NORMAL', 'COMBINATION'],
+      category: ProductCategory.HYDRATING,
+      skinTypes: [SkinType.DRY, SkinType.NORMAL, SkinType.COMBINATION],
       ingredients: ['Rose Extract', 'Hyaluronic Acid', 'Vitamin E', 'Aloe Vera'],
       benefits: [
         'Deep hydration',
@@ -77,8 +77,8 @@ async function main() {
         'https://images.unsplash.com/photo-1617897903246-719242758050',
         'https://images.unsplash.com/photo-1556228578-0d85b1a4d571',
       ],
-      category: 'BRIGHTENING',
-      skinTypes: ['NORMAL', 'COMBINATION', 'OILY'],
+      category: ProductCategory.BRIGHTENING,
+      skinTypes: [SkinType.NORMAL, SkinType.COMBINATION, SkinType.OILY],
       ingredients: ['Vitamin C', 'Citrus Extract', 'Niacinamide', 'Licorice Root'],
       benefits: [
         'Brightens skin',
@@ -106,8 +106,8 @@ async function main() {
         'https://images.unsplash.com/photo-1570554886111-e80fcca6a029',
         'https://images.unsplash.com/photo-1599305090598-fe179d501227',
       ],
-      category: 'ANTI_AGING',
-      skinTypes: ['DRY', 'NORMAL', 'SENSITIVE'],
+      category: ProductCategory.ANTI_AGING,
+      skinTypes: [SkinType.DRY, SkinType.NORMAL, SkinType.SENSITIVE],
       ingredients: ['Collagen', 'Peptides', 'Retinol', 'Hyaluronic Acid'],
       benefits: [
         'Reduces fine lines',
@@ -134,8 +134,8 @@ async function main() {
         'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b',
         'https://images.unsplash.com/photo-1556229010-aa49a7b3c64c',
       ],
-      category: 'PURIFYING',
-      skinTypes: ['OILY', 'COMBINATION'],
+      category: ProductCategory.PURIFYING,
+      skinTypes: [SkinType.OILY, SkinType.COMBINATION],
       ingredients: ['Activated Charcoal', 'Tea Tree Oil', 'Clay', 'Witch Hazel'],
       benefits: [
         'Deep cleansing',
@@ -162,8 +162,8 @@ async function main() {
         'https://images.unsplash.com/photo-1571875257727-256c39da42af',
         'https://images.unsplash.com/photo-1556228720-195a672e8a03',
       ],
-      category: 'SOOTHING',
-      skinTypes: ['SENSITIVE', 'DRY', 'NORMAL'],
+      category: ProductCategory.SOOTHING,
+      skinTypes: [SkinType.SENSITIVE, SkinType.DRY, SkinType.NORMAL],
       ingredients: ['Aloe Vera', 'Cucumber Extract', 'Chamomile', 'Calendula'],
       benefits: [
         'Calms irritation',

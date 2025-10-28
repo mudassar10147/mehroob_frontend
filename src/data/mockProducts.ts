@@ -2,7 +2,7 @@ import type { Product } from "@/components/product/ProductCard";
 
 export const bestSellingProducts: Product[] = [
   {
-    id: 1,
+    id: "1",
     name: "Hydrating Honey Sheet Mask",
     price: 1299,
     image: "/images/image_3.jpg",
@@ -12,7 +12,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 124,
   },
   {
-    id: 2,
+    id: "2",
     name: "Brightening Vitamin C Mask",
     price: 1499,
     image: "/images/image_4.jpg",
@@ -22,7 +22,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 89,
   },
   {
-    id: 3,
+    id: "3",
     name: "Anti-Aging Collagen Mask",
     price: 1699,
     image: "/images/image_2.jpg",
@@ -32,7 +32,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 156,
   },
   {
-    id: 4,
+    id: "4",
     name: "Soothing Aloe Vera Mask",
     price: 1199,
     image: "/images/image_3.jpg",
@@ -42,7 +42,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 203,
   },
   {
-    id: 5,
+    id: "5",
     name: "Hydrating Aqua Boost Mask",
     price: 1399,
     image: "/images/image_4.jpg",
@@ -52,7 +52,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 167,
   },
   {
-    id: 6,
+    id: "6",
     name: "Brightening Pearl Extract Mask",
     price: 1599,
     image: "/images/image_2.jpg",
@@ -62,7 +62,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 92,
   },
   {
-    id: 7,
+    id: "7",
     name: "Anti-Aging Retinol Night Mask",
     price: 1899,
     image: "/images/image_3.jpg",
@@ -72,7 +72,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 134,
   },
   {
-    id: 8,
+    id: "8",
     name: "Soothing Centella Calm Mask",
     price: 1249,
     image: "/images/image_4.jpg",
@@ -82,7 +82,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 178,
   },
   {
-    id: 9,
+    id: "9",
     name: "Hydrating Rose Water Mask",
     price: 1349,
     image: "/images/image_2.jpg",
@@ -92,7 +92,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 145,
   },
   {
-    id: 10,
+    id: "10",
     name: "Brightening Turmeric Gold Mask",
     price: 1699,
     image: "/images/image_3.jpg",
@@ -102,7 +102,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 112,
   },
   {
-    id: 11,
+    id: "11",
     name: "Anti-Aging Caviar Luxe Mask",
     price: 2199,
     image: "/images/image_4.jpg",
@@ -112,7 +112,7 @@ export const bestSellingProducts: Product[] = [
     reviews: 98,
   },
   {
-    id: 12,
+    id: "12",
     name: "Soothing Green Tea Mask",
     price: 1149,
     image: "/images/image_2.jpg",
