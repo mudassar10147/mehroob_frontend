@@ -13,11 +13,11 @@ export default function CartPage() {
   return (
     <div className="cart-page min-h-screen bg-white">
       {/* Header */}
-      <section className="bg-[var(--color-surface)] py-12 md:py-16">
+      <section className="bg-[var(--color-surface)] py-12 md:py-16 pt-24 md:pt-28">
         <div className="container">
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors mb-6"
+            className="inline-flex items-center gap-2 text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Continue Shopping
@@ -38,7 +38,7 @@ export default function CartPage() {
             // Empty Cart State
             <div className="text-center py-16 max-w-md mx-auto">
               <div className="w-32 h-32 mx-auto mb-8 rounded-full bg-[var(--color-surface)] flex items-center justify-center">
-                <ShoppingBag className="w-16 h-16 text-[var(--color-text-secondary)]" />
+                <ShoppingBag className="w-16 h-16 text-[var(--color-text-primary)] opacity-50" />
               </div>
               <h2 className="font-[var(--font-heading)] text-2xl font-semibold text-[var(--color-text-primary)] mb-4">
                 Your cart is empty
@@ -140,7 +140,7 @@ export default function CartPage() {
 
                   {/* Checkout Button */}
                   <Link href="/checkout">
-                    <Button className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 text-white py-6 text-base font-medium shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-all mb-3">
+                    <Button className="w-full bg-[var(--color-text-primary)] hover:bg-[var(--color-text-bold)] text-white py-6 text-base font-medium shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-all mb-3">
                       Proceed to Checkout
                     </Button>
                   </Link>
@@ -148,7 +148,7 @@ export default function CartPage() {
                   {/* Continue Shopping Link */}
                   <Link
                     href="/products"
-                    className="block text-center text-sm text-[var(--color-primary)] hover:underline"
+                    className="block text-center text-sm text-[var(--color-text-primary)] hover:underline transition-colors"
                   >
                     Continue Shopping
                   </Link>

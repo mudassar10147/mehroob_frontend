@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { ComingSoon } from '@/components/ui/ComingSoon';
 import { sheetMaskCategories } from '@/data/mockCategories';
 import { bestSellingProducts } from '@/data/mockProducts';
 
@@ -581,6 +582,50 @@ NEXT_PUBLIC_SITE_FULL_NAME="MaskBar by Mehroob"`}
             </div>
           </ComponentSection>
 
+          {/* Coming Soon Section */}
+          <ComponentSection
+            id="comingsoon"
+            title="Coming Soon"
+            description="Beautiful coming soon page component for features under development"
+          >
+            <div className="space-y-8">
+              <div className="rounded-lg border-2 border-dashed border-[var(--color-border)] overflow-hidden bg-white">
+                <ComingSoon />
+              </div>
+              
+              <div className="prose prose-sm max-w-none">
+                <h4 className="text-lg font-semibold mb-3">Features:</h4>
+                <ul className="space-y-2">
+                  <li>✅ Minimalist, elegant design aligned with brand</li>
+                  <li>✅ Customizable title and description</li>
+                  <li>✅ Animated icon with pulse effect</li>
+                  <li>✅ Smooth fade-in animations</li>
+                  <li>✅ Optional back button with custom text and href</li>
+                  <li>✅ Uses global CSS variables</li>
+                  <li>✅ Fully responsive design</li>
+                  <li>✅ Default messaging about Mehroob MVP</li>
+                </ul>
+                
+                <h4 className="text-lg font-semibold mt-6 mb-3">Usage:</h4>
+                <pre className="bg-[var(--color-surface)] p-4 rounded-lg text-sm overflow-x-auto">
+{`import { ComingSoon } from '@/components/ui/ComingSoon';
+
+// Default usage
+<ComingSoon />
+
+// Custom usage
+<ComingSoon
+  title="Feature Coming Soon"
+  description="Custom description here"
+  showBackButton={true}
+  backButtonHref="/"
+  backButtonText="Go Home"
+/>`}
+                </pre>
+              </div>
+            </div>
+          </ComponentSection>
+
           {/* Colors Section */}
           <ComponentSection
             id="colors"
@@ -724,6 +769,7 @@ const categories = [
   { id: 'alerts', name: 'Alerts' },
   { id: 'loading', name: 'Loading' },
   { id: 'typography', name: 'Typography' },
+  { id: 'comingsoon', name: 'Coming Soon' },
   { id: 'colors', name: 'Colors' },
 ];
 

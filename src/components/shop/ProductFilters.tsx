@@ -9,6 +9,7 @@ interface FilterOption {
 }
 
 interface ProductFiltersProps {
+  filters?: FilterState;
   onFilterChange?: (filters: FilterState) => void;
 }
 
@@ -26,24 +27,69 @@ const categories: FilterOption[] = [
   { label: "Soothing", value: "soothing", count: 3 },
 ];
 
-export function ProductFilters({ onFilterChange }: ProductFiltersProps) {
-  const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
-  const [priceRange, setPriceRange] = React.useState<[number, number]>([0, 5000]);
+export function ProductFilters({ filters: externalFilters, onFilterChange }: ProductFiltersProps) {
+  // Use external filters if provided, otherwise use internal state
+  const [internalFilters, setInternalFilters] = React.useState<FilterState>({
+    categories: [],
+    priceRange: [0, 5000],
+    sortBy: "featured",
+  });
+
+  const filters = externalFilters || internalFilters;
+  const selectedCategories = filters.categories;
+  const priceRange = filters.priceRange;
+
+  // Update internal state when external filters change
+  React.useEffect(() => {
+    if (externalFilters) {
+      setInternalFilters(externalFilters);
+    }
+  }, [externalFilters]);
 
   const handleCategoryToggle = (value: string) => {
+    let newCategories: string[];
     if (value === "all") {
-      setSelectedCategories([]);
+      newCategories = [];
     } else {
-      const newCategories = selectedCategories.includes(value)
+      newCategories = selectedCategories.includes(value)
         ? selectedCategories.filter((c) => c !== value)
         : [...selectedCategories, value];
-      setSelectedCategories(newCategories);
     }
+
+    const updatedFilters: FilterState = {
+      ...filters,
+      categories: newCategories,
+    };
+
+    if (!externalFilters) {
+      setInternalFilters(updatedFilters);
+    }
+    onFilterChange?.(updatedFilters);
+  };
+
+  const handlePriceRangeChange = (min: number, max: number) => {
+    const updatedFilters: FilterState = {
+      ...filters,
+      priceRange: [min, max],
+    };
+
+    if (!externalFilters) {
+      setInternalFilters(updatedFilters);
+    }
+    onFilterChange?.(updatedFilters);
   };
 
   const handleClearFilters = () => {
-    setSelectedCategories([]);
-    setPriceRange([0, 5000]);
+    const clearedFilters: FilterState = {
+      categories: [],
+      priceRange: [0, 5000],
+      sortBy: "featured",
+    };
+
+    if (!externalFilters) {
+      setInternalFilters(clearedFilters);
+    }
+    onFilterChange?.(clearedFilters);
   };
 
   const hasActiveFilters = selectedCategories.length > 0 || priceRange[0] > 0 || priceRange[1] < 5000;
@@ -115,9 +161,13 @@ export function ProductFilters({ onFilterChange }: ProductFiltersProps) {
               <input
                 type="number"
                 value={priceRange[0]}
-                onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
-                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
+                onChange={(e) => {
+                  const min = Math.max(0, Number(e.target.value));
+                  handlePriceRangeChange(min, priceRange[1]);
+                }}
+                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-text-primary)]"
                 placeholder="0"
+                min="0"
               />
             </div>
             <span className="text-[var(--color-text-secondary)] mt-6">-</span>
@@ -128,9 +178,13 @@ export function ProductFilters({ onFilterChange }: ProductFiltersProps) {
               <input
                 type="number"
                 value={priceRange[1]}
-                onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
+                onChange={(e) => {
+                  const max = Math.max(priceRange[0], Number(e.target.value));
+                  handlePriceRangeChange(priceRange[0], max);
+                }}
+                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-text-primary)]"
                 placeholder="5000"
+                min={priceRange[0]}
               />
             </div>
           </div>
@@ -142,16 +196,13 @@ export function ProductFilters({ onFilterChange }: ProductFiltersProps) {
         </div>
       </div>
 
-      {/* Apply Button */}
+      {/* Apply Button - Now just triggers immediate apply */}
       <button
-        onClick={() =>
-          onFilterChange?.({
-            categories: selectedCategories,
-            priceRange,
-            sortBy: "featured",
-          })
-        }
-        className="w-full bg-[var(--color-primary)] text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]"
+        onClick={() => {
+          // Filters are already applied via onChange handlers, but this ensures they're applied
+          onFilterChange?.(filters);
+        }}
+        className="w-full bg-[var(--color-text-primary)] hover:bg-[var(--color-text-bold)] text-white py-3 rounded-lg font-medium transition-all shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]"
       >
         Apply Filters
       </button>

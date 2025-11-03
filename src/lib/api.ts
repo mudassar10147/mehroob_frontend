@@ -45,6 +45,56 @@ class ApiClient {
     this.client.interceptors.response.use(
       (response) => response,
       (error: AxiosError) => {
+        // Handle network errors (no response received)
+        if (error.request && !error.response) {
+          // Log detailed error information
+          const errorDetails = {
+            message: error.message,
+            code: error.code,
+            name: error.name,
+            url: error.config?.url || 'unknown',
+            baseURL: error.config?.baseURL || API_CONFIG.BASE_URL,
+            fullURL: error.config?.baseURL && error.config?.url 
+              ? `${error.config.baseURL}${error.config.url}`
+              : `${API_CONFIG.BASE_URL}${error.config?.url || ''}`,
+            method: error.config?.method || 'unknown',
+            timeout: error.config?.timeout,
+            request: error.request ? 'Request object exists' : 'No request object',
+            response: error.response ? 'Response exists' : 'No response'
+          };
+          
+          console.error('Network Error Details:', errorDetails);
+          
+          // Log the full error for debugging
+          console.error('Full Axios Error:', error);
+          console.error('Error Config:', error.config);
+          
+          // Check if it's a CORS error (common cause)
+          if (error.message.includes('CORS') || error.code === 'ERR_NETWORK') {
+            console.error('⚠️ CORS or Network Issue Detected');
+            console.error('Backend URL:', API_CONFIG.BASE_URL);
+            if (typeof window !== 'undefined') {
+              console.error('Make sure your backend allows requests from:', window.location.origin);
+            }
+          }
+          
+          // Provide user-friendly error message
+          const networkError = new Error(
+            'Network Error: Unable to reach the server. Please check your connection or try again later. ' +
+            `Backend: ${API_CONFIG.BASE_URL}`
+          );
+          (networkError as any).isNetworkError = true;
+          (networkError as any).originalError = error;
+          (networkError as any).details = {
+            message: error.message,
+            code: error.code,
+            url: error.config?.url,
+            baseURL: error.config?.baseURL
+          };
+          return Promise.reject(networkError);
+        }
+
+        // Handle server response errors
         if (error.response) {
           // Handle specific status codes
           switch (error.response.status) {
@@ -67,8 +117,22 @@ class ApiClient {
             case 500:
               console.error('Server error');
               break;
+            case 0:
+              // CORS or network issue
+              console.error('CORS or Network Error - Request blocked');
+              break;
           }
         }
+
+        // Handle timeout errors
+        if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+          const timeoutError = new Error(
+            'Request timeout: The server took too long to respond. Please try again.'
+          );
+          (timeoutError as any).isTimeoutError = true;
+          return Promise.reject(timeoutError);
+        }
+
         return Promise.reject(error);
       }
     );
@@ -213,4 +277,5 @@ export const api = {
     }) => apiClient.post('/user/change-password', data),
   },
 };
+
 

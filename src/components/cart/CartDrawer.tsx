@@ -43,7 +43,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[var(--color-surface)] transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--color-surface)] transition-colors text-[var(--color-text-primary)]"
             aria-label="Close cart"
           >
             <X className="h-5 w-5" />
@@ -55,7 +55,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <div className="w-24 h-24 mb-6 rounded-full bg-[var(--color-surface)] flex items-center justify-center">
-                <ShoppingBag className="w-12 h-12 text-[var(--color-text-secondary)]" />
+                <ShoppingBag className="w-12 h-12 text-[var(--color-text-primary)] opacity-50" />
               </div>
               <h3 className="font-[var(--font-heading)] text-xl font-semibold text-[var(--color-text-primary)] mb-2">
                 Your cart is empty
@@ -64,7 +64,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 Add some masks to get started
               </p>
               <Link href="/products" onClick={onClose}>
-                <Button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 text-white">
+                <Button className="bg-[var(--color-text-primary)] hover:bg-[var(--color-text-bold)] text-white">
                   Shop Now
                 </Button>
               </Link>
@@ -99,14 +99,14 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             </p>
 
             {/* Total */}
-            <div className="flex items-center justify-between text-lg font-semibold text-[var(--color-text-primary)] pt-4 border-t border-[var(--color-border)]">
+            <div className="flex items-center justify-between text-lg font-semibold text-[var(--color-text-primary)] pt-4 border-t border-[var(--color-border)] mb-4">
               <span className="font-[var(--font-heading)]">Total</span>
               <span>PKR {total.toLocaleString()}</span>
             </div>
 
             {/* Checkout Button */}
-            <Link href="/checkout" onClick={onClose}>
-              <Button className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 text-white py-6 text-base font-medium shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-all">
+            <Link href="/checkout" onClick={onClose} className="block mb-3">
+              <Button className="w-full bg-[var(--color-text-primary)] hover:bg-[var(--color-text-bold)] text-white py-6 text-base font-medium shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-all">
                 Proceed to Checkout
               </Button>
             </Link>
@@ -115,7 +115,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             <Link
               href="/cart"
               onClick={onClose}
-              className="block text-center text-sm text-[var(--color-primary)] hover:underline"
+              className="block text-center text-sm text-[var(--color-text-primary)] hover:bg-[var(--color-surface)] py-2 rounded-md transition-colors"
             >
               View Full Cart
             </Link>

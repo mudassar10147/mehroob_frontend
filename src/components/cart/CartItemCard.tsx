@@ -45,17 +45,17 @@ export function CartItemCard({
           <div className="flex items-center gap-2">
             <button
               onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-              className="w-7 h-7 rounded-md border border-[var(--color-border)] hover:bg-white transition-colors flex items-center justify-center"
+              className="w-7 h-7 rounded-md border border-[var(--color-border)] hover:bg-white transition-colors flex items-center justify-center text-[var(--color-text-primary)]"
               aria-label="Decrease quantity"
             >
               <Minus className="h-3 w-3" />
             </button>
-            <span className="w-8 text-center font-medium text-sm">
+            <span className="w-8 text-center font-medium text-sm text-[var(--color-text-primary)]">
               {item.quantity}
             </span>
             <button
               onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-              className="w-7 h-7 rounded-md border border-[var(--color-border)] hover:bg-white transition-colors flex items-center justify-center"
+              className="w-7 h-7 rounded-md border border-[var(--color-border)] hover:bg-white transition-colors flex items-center justify-center text-[var(--color-text-primary)]"
               aria-label="Increase quantity"
             >
               <Plus className="h-3 w-3" />
@@ -67,7 +67,7 @@ export function CartItemCard({
         <div className="flex flex-col items-end justify-between">
           <button
             onClick={() => onRemove(item.id)}
-            className="p-1 rounded hover:bg-white transition-colors text-[var(--color-text-secondary)] hover:text-red-500"
+            className="p-1 rounded hover:bg-white transition-colors text-[var(--color-text-primary)] hover:text-red-500"
             aria-label="Remove item"
           >
             <Trash2 className="h-4 w-4" />
@@ -111,7 +111,7 @@ export function CartItemCard({
           {/* Remove Button (Desktop) */}
           <button
             onClick={() => onRemove(item.id)}
-            className="hidden sm:flex p-2 rounded-lg hover:bg-white transition-colors text-[var(--color-text-secondary)] hover:text-red-500"
+            className="hidden sm:flex p-2 rounded-lg hover:bg-white transition-colors text-[var(--color-text-primary)] hover:text-red-500"
             aria-label="Remove item"
           >
             <Trash2 className="h-5 w-5" />
@@ -126,15 +126,15 @@ export function CartItemCard({
             <div className="flex items-center gap-2 bg-white rounded-lg border border-[var(--color-border)] p-1">
               <button
                 onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                className="w-8 h-8 rounded-md hover:bg-[var(--color-surface)] transition-colors flex items-center justify-center"
+                className="w-8 h-8 rounded-md hover:bg-[var(--color-surface)] transition-colors flex items-center justify-center text-[var(--color-text-primary)]"
                 aria-label="Decrease quantity"
               >
                 <Minus className="h-4 w-4" />
               </button>
-              <span className="w-12 text-center font-medium">{item.quantity}</span>
+              <span className="w-12 text-center font-medium text-[var(--color-text-primary)]">{item.quantity}</span>
               <button
                 onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                className="w-8 h-8 rounded-md hover:bg-[var(--color-surface)] transition-colors flex items-center justify-center"
+                className="w-8 h-8 rounded-md hover:bg-[var(--color-surface)] transition-colors flex items-center justify-center text-[var(--color-text-primary)]"
                 aria-label="Increase quantity"
               >
                 <Plus className="h-4 w-4" />
@@ -156,7 +156,7 @@ export function CartItemCard({
             {/* Remove Button (Mobile) */}
             <button
               onClick={() => onRemove(item.id)}
-              className="sm:hidden p-2 rounded-lg hover:bg-white transition-colors text-[var(--color-text-secondary)] hover:text-red-500"
+              className="sm:hidden p-2 rounded-lg hover:bg-white transition-colors text-[var(--color-text-primary)] hover:text-red-500"
               aria-label="Remove item"
             >
               <Trash2 className="h-5 w-5" />

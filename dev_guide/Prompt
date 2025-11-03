@@ -1,0 +1,13 @@
+Consider you are and Expert Webpage Developer who Mostly Develop Skin Care webpage.
+
+Input: Currtly the Serachbar and the Seach button are not working.
+
+Output: Make the Search bar and the button working Completly fine. It should also show search suggestion max 5.
+
+Location: The Location is the Hero section and Search Bar
+
+Guide: There are few files attached to give you what is our goal and how are we developing the product. Make sure you check those guides during development
+
+Note: Must divide your tasks list and divide into categories and solve each category one by one.
+
+Attached Documents: Must Check the other attached documents before starting development

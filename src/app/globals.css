@@ -8,9 +8,9 @@
   --color-primary-light: #F2FAEA; /* Main primary color - light */
   --color-background: #FAF9F7;    /* Base background */
   --color-surface: #F6F1EE;       /* Section backgrounds */
-  --color-text-primary: #515150;  /* Normal text */
+  --color-text-primary: #2B2B2B;  /* Normal text - Deep charcoal for visibility on light backgrounds */
   --color-text-bold: #1D1D1D;     /* Highlighted bold text */
-  --color-text-secondary: #ebebeb;/* Muted text */
+  --color-text-secondary: #7A7A7A; /* Muted text */
   --color-border: #EDEDED;        /* Soft divider lines */
   
   /* Secondary colors */

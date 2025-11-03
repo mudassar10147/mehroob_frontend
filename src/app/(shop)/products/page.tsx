@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ShopHeader } from "@/components/shop/ShopHeader";
@@ -18,19 +18,53 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState("featured");
   const [showFilters, setShowFilters] = useState(false);
 
-  // Read search query from URL
+  // Read search query and category from URL
   const searchQuery = searchParams.get("search");
+  const urlCategory = searchParams.get("category");
+
+  // Initialize filters from URL if present
+  useEffect(() => {
+    if (urlCategory) {
+      const categorySlug = urlCategory.toLowerCase();
+      // Check if it's a valid category
+      const validCategories = ["hydrating", "brightening", "anti-aging", "soothing", "purifying"];
+      if (validCategories.includes(categorySlug)) {
+        setFilters(prev => ({
+          ...prev,
+          categories: [categorySlug],
+        }));
+      }
+    }
+  }, [urlCategory]);
 
   // Convert FilterState to ProductFiltersType
-  const apiFilters: ProductFiltersType = {
+  // Note: API expects category as ProductCategory type, not array
+  // For now, we'll use the first selected category or undefined
+  const categoryFilter = useMemo(() => {
+    if (filters.categories.length > 0) {
+      return filters.categories[0] as ProductFiltersType['category'];
+    }
+    if (urlCategory) {
+      return urlCategory.toLowerCase() as ProductFiltersType['category'];
+    }
+    return undefined;
+  }, [filters.categories, urlCategory]);
+
+  // Memoize price values to avoid array reference issues
+  const priceMin = filters.priceRange[0] > 0 ? filters.priceRange[0] : undefined;
+  const priceMax = filters.priceRange[1] < 5000 ? filters.priceRange[1] : undefined;
+
+  // Memoize apiFilters to prevent infinite re-renders
+  const apiFilters: ProductFiltersType = useMemo(() => ({
     search: searchQuery || undefined,
-    priceMin: filters.priceRange[0],
-    priceMax: filters.priceRange[1],
+    category: categoryFilter,
+    priceMin,
+    priceMax,
     sortBy: sortBy === "featured" ? undefined : 
             sortBy === "price-low" ? "price-asc" : 
             sortBy === "price-high" ? "price-desc" : 
             sortBy === "newest" ? "newest" : undefined,
-  };
+  }), [searchQuery, categoryFilter, priceMin, priceMax, sortBy]);
 
   // Fetch products from API
   const { products, isLoading, error, pagination } = useProducts(apiFilters);
@@ -112,6 +146,7 @@ export default function ProductsPage() {
                     </div>
                     <div className="p-4">
                       <ProductFilters
+                        filters={filters}
                         onFilterChange={(newFilters) => {
                           setFilters(newFilters);
                           setShowFilters(false);
@@ -125,7 +160,7 @@ export default function ProductsPage() {
 
             {/* Desktop Sidebar Filter */}
             <div className="hidden lg:block w-64 flex-shrink-0">
-              <ProductFilters onFilterChange={setFilters} />
+              <ProductFilters filters={filters} onFilterChange={setFilters} />
             </div>
 
             {/* Products Area */}

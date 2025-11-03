@@ -3,10 +3,9 @@
  */
 
 // API Configuration
-// NOTE: Using local API routes for mock data
-// Change back to 'http://localhost:4000/api' when backend is ready
+// Backend API URL - deployed on Render
 export const API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || '/api',
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'https://mehroob-backend.onrender.com/api',
   TIMEOUT: 30000, // 30 seconds
 } as const;
 
@@ -14,7 +13,7 @@ export const API_CONFIG = {
 export const APP_CONFIG = {
   NAME: 'SheetMask Store',
   DESCRIPTION: 'Premium Sheet Masks for Beautiful Skin',
-  URL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:4000',
+  URL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
 } as const;
 
 // Routes
