@@ -140,7 +140,7 @@ export default function CheckoutPage() {
       )}
 
       {/* Header */}
-      <section className="bg-[var(--color-surface)] py-8 md:py-12">
+      <section className="bg-[var(--color-surface)] py-8 md:py-12 pt-24 md:pt-28">
         <div className="container">
           <Link
             href="/cart"

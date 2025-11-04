@@ -7,7 +7,7 @@ import { FooterNewsletter } from "./FooterNewsletter";
 
 export function Footer() {
   return (
-    <footer className="footer bg-[var(--color-surface)] border-t border-[var(--color-border)]">
+    <footer className="footer bg-[var(--color-surface)] border-t border-[var(--color-border)] pt-[50px]">
       <div className="container py-12 lg:py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">

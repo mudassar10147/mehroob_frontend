@@ -276,6 +276,67 @@ export const api = {
       newPassword: string;
     }) => apiClient.post('/user/change-password', data),
   },
+
+  // Categories endpoints
+  categories: {
+    getAll: (params?: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      isActive?: boolean;
+      parentCategory?: string | null;
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
+      includeSubcategories?: boolean;
+    }) => apiClient.get('/categories', { params }),
+    getMain: (params?: {
+      isActive?: boolean;
+      includeSubcategories?: boolean;
+    }) => apiClient.get('/categories/main', { params }),
+    getById: (id: string) => apiClient.get(`/categories/${id}`),
+    getBySlug: (slug: string) => apiClient.get(`/categories/slug/${slug}`),
+    getSubcategories: (id: string, params?: { isActive?: boolean }) =>
+      apiClient.get(`/categories/${id}/subcategories`, { params }),
+    getHierarchy: (params?: { isActive?: boolean }) =>
+      apiClient.get('/categories/hierarchy', { params }),
+    getStats: () => apiClient.get('/categories/stats'),
+  },
+
+  // Newsletter endpoints
+  newsletter: {
+    subscribe: (data: {
+      email: string;
+      firstName?: string;
+      lastName?: string;
+      preferences?: {
+        frequency?: 'daily' | 'weekly' | 'monthly';
+        categories?: string[];
+        notifications?: {
+          newPosts?: boolean;
+          weeklyDigest?: boolean;
+          productUpdates?: boolean;
+          companyNews?: boolean;
+        };
+      };
+      source?: string;
+      tags?: string[];
+    }) => apiClient.post('/newsletter/subscribe', data),
+    verify: (token: string) => apiClient.get(`/newsletter/verify/${token}`),
+    unsubscribe: (token: string) => apiClient.get(`/newsletter/unsubscribe/${token}`),
+    getStatus: (email: string) => apiClient.get(`/newsletter/status/${email}`),
+    updatePreferences: (email: string, preferences: {
+      frequency?: 'daily' | 'weekly' | 'monthly';
+      categories?: string[];
+      notifications?: {
+        newPosts?: boolean;
+        weeklyDigest?: boolean;
+        productUpdates?: boolean;
+        companyNews?: boolean;
+      };
+    }) => apiClient.put(`/newsletter/preferences/${email}`, { preferences }),
+    resendVerification: (email: string) => 
+      apiClient.post('/newsletter/resend-verification', { email }),
+  },
 };
 
 

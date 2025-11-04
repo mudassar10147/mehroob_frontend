@@ -109,12 +109,12 @@ export function ProductCard({ product }: ProductCardProps) {
                   <span className="text-sm text-[#8B8B8B] line-through">
                     PKR {product.price.toLocaleString()}
                   </span>
-                  <span className="text-xl font-semibold text-[var(--color-primary)]">
+                  <span className="text-xl font-semibold text-black">
                     PKR {discountedPrice.toLocaleString()}
                   </span>
                 </>
               ) : (
-                <span className="text-xl font-semibold text-[var(--color-text-bold)]">
+                <span className="text-xl font-semibold text-black">
                   PKR {product.price.toLocaleString()}
                 </span>
               )}

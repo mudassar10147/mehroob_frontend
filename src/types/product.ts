@@ -120,6 +120,8 @@ export interface ProductReview {
 
 export interface ProductFilters {
   category?: ProductCategory;
+  categoryId?: string; // Single category ID for API filtering
+  categoryIds?: string[]; // Multiple category IDs for client-side filtering
   skinType?: SkinType;
   priceMin?: number;
   priceMax?: number;

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CategoryCard } from "@/components/category/CategoryCard";
 import { sheetMaskCategories } from "@/data/mockCategories";
@@ -28,12 +29,14 @@ export default function CategoriesSection() {
 
         {/* View All Products Button */}
         <div className="text-center mt-16">
-          <Button
-            size="lg"
-            className="bg-[var(--color-primary)] hover:bg-[var(--color-secondary-2)] text-[var(--color-text-bold)] px-12 py-6 text-lg font-semibold transition-all duration-[var(--transition-medium)] shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] hover:-translate-y-1"
-          >
-            View All Products
-          </Button>
+          <Link href="/products">
+            <Button
+              size="lg"
+              className="bg-[var(--color-primary)] hover:bg-[var(--color-secondary-2)] text-[var(--color-text-bold)] px-12 py-6 text-lg font-semibold transition-all duration-[var(--transition-medium)] shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] hover:-translate-y-1"
+            >
+              View All Products
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

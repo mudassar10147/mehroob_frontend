@@ -8,6 +8,7 @@ interface FooterLinkGroupProps {
   links: Array<{
     label: string;
     href: string;
+    disabled?: boolean;
   }>;
 }
 
@@ -20,12 +21,18 @@ function FooterLinkGroup({ title, links }: FooterLinkGroupProps) {
       <ul className="space-y-3">
         {links.map((link, index) => (
           <li key={index}>
-            <Link 
-              href={link.href}
-              className="text-sm text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
-            >
-              {link.label}
-            </Link>
+            {link.disabled ? (
+              <span className="text-sm text-[var(--color-text-secondary)] cursor-not-allowed opacity-60">
+                {link.label}
+              </span>
+            ) : (
+              <Link 
+                href={link.href}
+                className="text-sm text-[var(--color-text-primary)] hover:text-[var(--color-primary)] transition-colors duration-[var(--transition-fast)]"
+              >
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>
@@ -39,10 +46,10 @@ export function FooterLinks() {
       title: "Shop",
       links: [
         { label: "All Products", href: "/products" },
-        { label: "Hydrating Masks", href: "/products?category=hydrating" },
-        { label: "Brightening Masks", href: "/products?category=brightening" },
-        { label: "Anti-Aging Masks", href: "/products?category=anti-aging" },
-        { label: "Acne Control", href: "/products?category=acne-control" },
+        { label: "Hydrating Masks", href: "/products?category=hydrating", disabled: true },
+        { label: "Brightening Masks", href: "/products?category=brightening", disabled: true },
+        { label: "Anti-Aging Masks", href: "/products?category=anti-aging", disabled: true },
+        { label: "Acne Control", href: "/products?category=acne-control", disabled: true },
       ],
     },
     {

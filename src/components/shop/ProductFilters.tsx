@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useMainCategories } from "@/hooks/useCategories";
 
 interface FilterOption {
   label: string;
@@ -9,7 +10,6 @@ interface FilterOption {
 }
 
 interface ProductFiltersProps {
-  filters?: FilterState;
   onFilterChange?: (filters: FilterState) => void;
 }
 
@@ -19,32 +19,36 @@ export interface FilterState {
   sortBy: string;
 }
 
-const categories: FilterOption[] = [
-  { label: "All Masks", value: "all", count: 12 },
-  { label: "Hydrating", value: "hydrating", count: 3 },
-  { label: "Brightening", value: "brightening", count: 3 },
-  { label: "Anti-Aging", value: "anti-aging", count: 3 },
-  { label: "Soothing", value: "soothing", count: 3 },
-];
+export function ProductFilters({ onFilterChange }: ProductFiltersProps) {
+  const { categories: fetchedCategories, isLoading: categoriesLoading } = useMainCategories(true);
+  const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
+  const [priceRange, setPriceRange] = React.useState<[number, number]>([0, 5000]);
+  // Temporary price range for inputs (only applied on button click)
+  const [tempPriceRange, setTempPriceRange] = React.useState<[string, string]>(['0', '5000']);
 
-export function ProductFilters({ filters: externalFilters, onFilterChange }: ProductFiltersProps) {
-  // Use external filters if provided, otherwise use internal state
-  const [internalFilters, setInternalFilters] = React.useState<FilterState>({
-    categories: [],
-    priceRange: [0, 5000],
-    sortBy: "featured",
-  });
-
-  const filters = externalFilters || internalFilters;
-  const selectedCategories = filters.categories;
-  const priceRange = filters.priceRange;
-
-  // Update internal state when external filters change
-  React.useEffect(() => {
-    if (externalFilters) {
-      setInternalFilters(externalFilters);
-    }
-  }, [externalFilters]);
+  // Build category options from fetched data - Only subcategories (not parent categories)
+  const categoryOptions: FilterOption[] = React.useMemo(() => {
+    // Add "All Masks" option
+    const options: FilterOption[] = [{ label: "All Masks", value: "all" }];
+    
+    // Only add subcategories (categories with parentCategory !== null)
+    fetchedCategories.forEach((category) => {
+      // Skip main categories - only add their subcategories
+      if (category.subcategories && category.subcategories.length > 0) {
+        category.subcategories.forEach((subcategory) => {
+          // Only add if it's actually a subcategory (has parent)
+          if (subcategory.parentCategory !== null) {
+            options.push({
+              label: subcategory.name,
+              value: subcategory._id,
+            });
+          }
+        });
+      }
+    });
+    
+    return options;
+  }, [fetchedCategories]);
 
   const handleCategoryToggle = (value: string) => {
     let newCategories: string[];
@@ -55,41 +59,56 @@ export function ProductFilters({ filters: externalFilters, onFilterChange }: Pro
         ? selectedCategories.filter((c) => c !== value)
         : [...selectedCategories, value];
     }
-
-    const updatedFilters: FilterState = {
-      ...filters,
+    setSelectedCategories(newCategories);
+    // Trigger filter change immediately when category changes
+    onFilterChange?.({
       categories: newCategories,
-    };
-
-    if (!externalFilters) {
-      setInternalFilters(updatedFilters);
-    }
-    onFilterChange?.(updatedFilters);
+      priceRange,
+      sortBy: "featured",
+    });
   };
 
-  const handlePriceRangeChange = (min: number, max: number) => {
-    const updatedFilters: FilterState = {
-      ...filters,
-      priceRange: [min, max],
-    };
+  const handleTempPriceInputChange = (min: string, max: string) => {
+    // Allow empty values while typing
+    setTempPriceRange([min, max]);
+  };
 
-    if (!externalFilters) {
-      setInternalFilters(updatedFilters);
+  const handlePriceInputBlur = (type: 'min' | 'max') => {
+    // When field loses focus, if empty, set to default value
+    if (type === 'min') {
+      const minValue = tempPriceRange[0] === '' ? '0' : tempPriceRange[0];
+      setTempPriceRange([minValue, tempPriceRange[1]]);
+    } else {
+      const maxValue = tempPriceRange[1] === '' ? '5000' : tempPriceRange[1];
+      setTempPriceRange([tempPriceRange[0], maxValue]);
     }
-    onFilterChange?.(updatedFilters);
+  };
+
+  const handleApplyFilters = () => {
+    // Convert temp price range to numbers and apply
+    const minPrice = Number(tempPriceRange[0]) || 0;
+    const maxPrice = Number(tempPriceRange[1]) || 5000;
+    const newPriceRange: [number, number] = [minPrice, maxPrice];
+    
+    setPriceRange(newPriceRange);
+    // Trigger filter change with applied filters
+    onFilterChange?.({
+      categories: selectedCategories,
+      priceRange: newPriceRange,
+      sortBy: "featured",
+    });
   };
 
   const handleClearFilters = () => {
-    const clearedFilters: FilterState = {
+    setSelectedCategories([]);
+    setPriceRange([0, 5000]);
+    setTempPriceRange(['0', '5000']);
+    // Trigger filter change with cleared filters
+    onFilterChange?.({
       categories: [],
       priceRange: [0, 5000],
       sortBy: "featured",
-    };
-
-    if (!externalFilters) {
-      setInternalFilters(clearedFilters);
-    }
-    onFilterChange?.(clearedFilters);
+    });
   };
 
   const hasActiveFilters = selectedCategories.length > 0 || priceRange[0] > 0 || priceRange[1] < 5000;
@@ -116,8 +135,13 @@ export function ProductFilters({ filters: externalFilters, onFilterChange }: Pro
         <h4 className="font-semibold text-[var(--color-text-primary)] mb-4 text-[var(--fs-base)]">
           Category
         </h4>
-        <div className="space-y-3">
-          {categories.map((category) => (
+        {categoriesLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--color-primary)]"></div>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {categoryOptions.map((category) => (
             <label
               key={category.value}
               className="flex items-center justify-between cursor-pointer group"
@@ -143,8 +167,9 @@ export function ProductFilters({ filters: externalFilters, onFilterChange }: Pro
                 </span>
               )}
             </label>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Price Range Filter */}
@@ -160,12 +185,10 @@ export function ProductFilters({ filters: externalFilters, onFilterChange }: Pro
               </label>
               <input
                 type="number"
-                value={priceRange[0]}
-                onChange={(e) => {
-                  const min = Math.max(0, Number(e.target.value));
-                  handlePriceRangeChange(min, priceRange[1]);
-                }}
-                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-text-primary)]"
+                value={tempPriceRange[0]}
+                onChange={(e) => handleTempPriceInputChange(e.target.value, tempPriceRange[1])}
+                onBlur={() => handlePriceInputBlur('min')}
+                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
                 placeholder="0"
                 min="0"
               />
@@ -177,31 +200,26 @@ export function ProductFilters({ filters: externalFilters, onFilterChange }: Pro
               </label>
               <input
                 type="number"
-                value={priceRange[1]}
-                onChange={(e) => {
-                  const max = Math.max(priceRange[0], Number(e.target.value));
-                  handlePriceRangeChange(priceRange[0], max);
-                }}
-                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-text-primary)]"
+                value={tempPriceRange[1]}
+                onChange={(e) => handleTempPriceInputChange(tempPriceRange[0], e.target.value)}
+                onBlur={() => handlePriceInputBlur('max')}
+                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
                 placeholder="5000"
-                min={priceRange[0]}
+                min="0"
               />
             </div>
           </div>
           <div className="text-center">
             <span className="text-[var(--fs-sm)] text-[var(--color-text-secondary)]">
-              PKR {priceRange[0].toLocaleString()} - PKR {priceRange[1].toLocaleString()}
+              PKR {Number(tempPriceRange[0] || 0).toLocaleString()} - PKR {Number(tempPriceRange[1] || 5000).toLocaleString()}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Apply Button - Now just triggers immediate apply */}
+      {/* Apply Button */}
       <button
-        onClick={() => {
-          // Filters are already applied via onChange handlers, but this ensures they're applied
-          onFilterChange?.(filters);
-        }}
+        onClick={handleApplyFilters}
         className="w-full bg-[var(--color-text-primary)] hover:bg-[var(--color-text-bold)] text-white py-3 rounded-lg font-medium transition-all shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]"
       >
         Apply Filters

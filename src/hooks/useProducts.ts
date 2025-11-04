@@ -1,24 +1,7 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Product, ProductFilters } from '@/types/product';
 import { BackendPaginatedResponse } from '@/types/api';
 import { api } from '@/lib/api';
-
-/**
- * Deep comparison helper
- */
-function areFiltersEqual(filters1?: ProductFilters, filters2?: ProductFilters): boolean {
-  if (!filters1 && !filters2) return true;
-  if (!filters1 || !filters2) return false;
-  return (
-    filters1.category === filters2.category &&
-    filters1.skinType === filters2.skinType &&
-    filters1.priceMin === filters2.priceMin &&
-    filters1.priceMax === filters2.priceMax &&
-    filters1.search === filters2.search &&
-    filters1.inStock === filters2.inStock &&
-    filters1.sortBy === filters2.sortBy
-  );
-}
 
 /**
  * Custom hook for fetching and managing products
@@ -35,17 +18,16 @@ export function useProducts(initialFilters?: ProductFilters) {
     pageSize: 20,
   });
 
-  // Use ref to track previous filters for comparison
-  const prevFiltersRef = useRef<ProductFilters | undefined>(initialFilters);
-
-  // Update filters when initialFilters change (from parent component)
-  // Only update if filters actually changed
+  // Update filters when initialFilters prop changes (using ref to track previous value)
+  const prevFiltersRef = useRef<string>('');
   useEffect(() => {
-    if (!areFiltersEqual(initialFilters, prevFiltersRef.current)) {
-      if (initialFilters) {
+    if (initialFilters) {
+      const currentFiltersString = JSON.stringify(initialFilters);
+      // Only update if filters actually changed
+      if (prevFiltersRef.current !== currentFiltersString) {
+        prevFiltersRef.current = currentFiltersString;
         setFilters(initialFilters);
       }
-      prevFiltersRef.current = initialFilters;
     }
   }, [initialFilters]);
 
@@ -56,39 +38,45 @@ export function useProducts(initialFilters?: ProductFilters) {
       setError(null);
 
       try {
-        // Build API params
-        const apiParams: any = {
+        const response = await api.products.getAll({
           page,
           limit: pagination.pageSize,
+          categoryId: filters.categoryId || filters.category,
+          skinType: filters.skinType,
+          minPrice: filters.priceMin,
+          maxPrice: filters.priceMax,
+          search: filters.search,
+          inStock: filters.inStock,
+          sortBy: filters.sortBy?.split('-')[0],
+          sortOrder: filters.sortBy?.split('-')[1] as 'asc' | 'desc',
           isActive: true, // Only show active products
-        };
+        }) as BackendPaginatedResponse<Product>;
 
-        // Add filters if provided
-        if (filters.category) {
-          // Note: API expects categoryId (ObjectId string) but we're passing category slug
-          // Backend may need to handle slug-to-ID conversion, or we need to fetch category IDs first
-          // For MVP, we'll pass the slug and backend should handle it
-          // TODO: Fetch category IDs from backend if needed
-          apiParams.categoryId = filters.category;
-        }
-        if (filters.skinType) apiParams.skinType = filters.skinType;
-        if (filters.priceMin) apiParams.minPrice = filters.priceMin;
-        if (filters.priceMax) apiParams.maxPrice = filters.priceMax;
-        if (filters.search) apiParams.search = filters.search;
-        if (filters.inStock !== undefined) apiParams.inStock = filters.inStock;
-        if (filters.sortBy) {
-          apiParams.sortBy = filters.sortBy.split('-')[0];
-          apiParams.sortOrder = filters.sortBy.split('-')[1] as 'asc' | 'desc';
-        }
-
-        const response = await api.products.getAll(apiParams) as BackendPaginatedResponse<Product>;
-
+        let filteredProducts = [];
         if (response.success && response.data) {
-          setProducts(response.data.products);
+          filteredProducts = response.data.products;
+          
+          // If multiple categories selected, filter client-side
+          if (filters.categoryIds && filters.categoryIds.length > 1) {
+            filteredProducts = filteredProducts.filter((product) =>
+              filters.categoryIds!.includes(product.categoryId._id)
+            );
+          }
+          // If single category selected, also filter client-side to ensure it works
+          else if (filters.categoryId) {
+            filteredProducts = filteredProducts.filter((product) =>
+              product.categoryId._id === filters.categoryId
+            );
+          }
+          
+          setProducts(filteredProducts);
           setPagination({
             currentPage: response.data.pagination.current,
             totalPages: response.data.pagination.pages,
-            totalCount: response.data.pagination.total,
+            // Adjust total count if client-side filtered
+            totalCount: (filters.categoryIds && filters.categoryIds.length > 1) || filters.categoryId
+              ? filteredProducts.length 
+              : response.data.pagination.total,
             pageSize: response.data.pagination.limit,
           });
         }
@@ -103,9 +91,9 @@ export function useProducts(initialFilters?: ProductFilters) {
     [filters, pagination.pageSize]
   );
 
-  // Initial fetch
+  // Fetch products when filters change
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(1);
   }, [fetchProducts]);
 
   // Update filters
